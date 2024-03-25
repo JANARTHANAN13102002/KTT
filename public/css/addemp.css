@@ -1,0 +1,30 @@
+#addemp{
+    margin-top: 12%;
+    margin-right: 40%;
+}
+
+.butemp{
+    margin-top: 10%;
+    position: absolute;
+    margin-left: 70%;
+}
+
+.but1{
+    width: 150%;
+    height: 3rem;
+    border-radius: 10rem;
+    font-style:oblique;
+    color: white;
+    background-color: rgb(30, 30, 194);
+    border: 1px white;
+} 
+
+.but1 a  {
+    text-decoration: none;
+    color: white;
+}
+.but1 a:hover {
+    text-decoration: none;  
+    color: white;
+}
+
