@@ -90,7 +90,7 @@ async function fetching(url) {
                     "bSortable": false, 
                     // "Width":"3%", 
                     "render": function (data) { 
-                        return `<div class="mx-auto"><a class="btn btn-primary btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a>`
+                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a>`
                     } 
                 } 
             ], 

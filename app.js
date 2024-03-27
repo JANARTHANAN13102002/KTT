@@ -33,6 +33,9 @@ app.use(express.static('public'));
   app.get('/password', (req, res) => {
       res.sendFile(path.join(__dirname,'password.html'));
   });
+  app.get('/emp', (req, res) => {
+      res.sendFile(path.join(__dirname,'employee.html'));
+  });
 
 
 
@@ -214,7 +217,12 @@ app.use(express.static('public'));
             }
           });
 
-
+// Delete Asset Details
+      app.delete('/deleteEmployee', async (req, res) => {
+        const {id} = req.body;
+        const result = await Asset.destroy({where:{id : id}});
+        res.send("result");
+      });          
 
 
 app.listen(port, () => {

@@ -78,11 +78,11 @@ async function fetching(url) {
                     "bSortable": false, 
                     // "Width":"3%", 
                     "render": function (data) { 
-                        return `<div class="mx-auto"><a class="btn btn-primary btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a>`
+                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a>  <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="deleteemployee(this.getAttribute('data-id'))">Delete</a>`
                     } 
                 } 
             ], 
-            autoWidth: true, 
+            autoWidth:true, 
         }); 
     } 
  
@@ -137,3 +137,18 @@ async function editemployee(id) {
         console.error('Error editing employee:', error);
     }
 }
+
+
+async function deleteemployee(id) {
+    try {
+        var con = await fetch('/deleteEmployee', {
+            method: "DELETE",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ "id" : `${id}` })
+        });
+        window.location.reload();
+    } catch (error) {
+        console.error('Error editing employee:', error);
+    }
+}
+

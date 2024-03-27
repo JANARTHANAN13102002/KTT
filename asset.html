@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Tracker</title>
+    <title>Asset Management</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -14,7 +14,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="/">Asset Tracker</a>
+        <a class="navbar-brand ps-3" href="/">Asset Management</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -69,16 +69,6 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Add Asset Details</h1>
-            </div>
-        
-            <!-- Button to trigger modal -->
-            <div id="form1">
-                <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
-                    Add Asset Details
-                </button>
-            </div>
             <!-- Modal -->
             <div class="modal fade" id="employeeFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -128,22 +118,45 @@
             </div>
         </main>
     </div>
-    <div class="table_div">
-        <table id="asset_master" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Serial Number</th>
-                    <th>Asset Name</th>
-                    <th>Brand Name</th>
-                    <th>Model</th>
-                    <th>Asset Cost</th> 
-                    <th>Employee Id</th>
-                    <th>AssetCategory Id</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-        </table>
+    
+
+<!-- Table Creation -->
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Asset Table</h1>
+                    <!-- Button to trigger modal -->
+                    <div id="form1">
+                        <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
+                            Add Asset Details
+                        </button>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <table id="asset_master" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Serial Number</th>
+                                            <th>Asset Name</th>
+                                            <th>Brand Name</th>
+                                            <th>Model</th>
+                                            <th>Asset Cost</th> 
+                                            <th>Employee Id</th>
+                                            <th>AssetCategory Id</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <div class="modal fade" id="editmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -11244,40 +11244,18 @@ body {
 
 
 #form1 {
-  margin-left: 50%;
+  margin-left: 60%;
   border-radius: 30px;
-  width: 50%;
-  font-size: 1.3rem;
-  text-align: center;
-  margin-top: 5%;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  position:static;
 }
 
 .table_div{
  margin-left: 14.6%;
 }
 
-@media  (max-width: 1300px) {
-  body {
-    margin-left: 5%;
-  }
-}
-@media  (max-width: 1200px) {
-  body {
-    margin-left: 6%;
-  }
-}
-@media  (max-width: 1150px) {
-  body {
-    margin-left: 7%;
-  }
-}
-@media  (max-width: 1010px) {
-  body {
-    margin-left: 10%;
-  }
-}
-@media  (max-width: 950px) {
-  body {
-    margin-left: 3%;
-  }
+.btn-size {
+  /* width: 80px; */
+  margin-top: 2px;
 }
