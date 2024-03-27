@@ -54,7 +54,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Asset Master
                         </a>
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="/category">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Asset Categories
                         </a>
@@ -66,71 +66,153 @@
                 </div>
             </nav>
         </div>
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Add Asset Details</h1>
-                    <!-- Button to trigger modal -->
-                
-                <div id="form1">
-                    <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
-                        Add Asset Details
-                    </button>
-                </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="employeeFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Employee Form</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Add Asset Details</h1>
+            </div>
+        
+            <!-- Button to trigger modal -->
+            <div id="form1">
+                <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
+                    Add Asset Details
+                </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="employeeFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Asset Form</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="employeeForm" method="get" action="/assets">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Serial Number</label>
+                                    <input type="number" class="form-control" name="snumber" required>
                                 </div>
-                                <div class="modal-body">
-                                    <form id="employeeForm" method="get" action="/assets">
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Serial Number</label>
-                                            <input type="number" class="form-control" name="snumber" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Asset Name</label>
-                                            <input type="text" class="form-control" name="aname" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="age" class="form-label">Brand Name</label>
-                                            <input type="text" class="form-control" name="bname" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="mobile" class="form-label">Model</label>
-                                            <input type="text" class="form-control" name="mname" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="address" class="form-label">Asset Cost</label>
-                                            <input type="number" class="form-control" name="acost" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="role" class="form-label">Purchase Date</label>
-                                            <input type="date" class="form-control" name="pdate" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="joiningDate" class="form-label">Employee ID</label>
-                                            <input type="number" class="form-control" name="eid" required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-                                    </form>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Asset Name</label>
+                                    <input type="text" class="form-control" name="aname" required>
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <label for="age" class="form-label">Brand Name</label>
+                                    <input type="text" class="form-control" name="bname" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mobile" class="form-label">Model</label>
+                                    <input type="text" class="form-control" name="mname" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Asset Cost</label>
+                                    <input type="number" class="form-control" name="acost" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="joiningDate" class="form-label">Employee ID</label>
+                                    <input type="number" class="form-control" name="eid" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="joiningDate" class="form-label">AssetCategory ID</label>
+                                    <input type="number" class="form-control" name="aid" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
+        </main>
+    </div>
+    <div class="table_div">
+        <table id="asset_master" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Serial Number</th>
+                    <th>Asset Name</th>
+                    <th>Brand Name</th>
+                    <th>Model</th>
+                    <th>Asset Cost</th> 
+                    <th>Employee Id</th>
+                    <th>AssetCategory Id</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="modal fade" id="editmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Asset Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="AssetForm" >
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Serial Number</label>
+                            <input type="number" id="snumber" class="form-control" name="snumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Asset Name</label>
+                            <input type="text" id="aname" class="form-control" name="aname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Brand Name</label>
+                            <input type="text" id="bname" class="form-control" name="bname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Model</label>
+                            <input type="text" id="mname" class="form-control" name="mname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Asset Cost</label>
+                            <input type="number" id="acost" class="form-control" name="acost" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="joiningDate" class="form-label">Employee ID</label>
+                            <input type="number" id="eid" class="form-control" name="eid" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="joiningDate" class="form-label">AssetCategory ID</label>
+                            <input type="number" id="aid" class="form-control" name="aid" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="/js/asset.js"></script>
+    <script src="/app.js"></script>
+    <script src="/js/moment.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.1/datatables.min.css" rel="stylesheet">
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.1/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js" ></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"  ></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"  ></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"   ></script>
+    <script src='/bootstrap-5.0.2-dist/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js'></script> 
 </body>
 </html>

@@ -8,7 +8,7 @@ const basename = path.basename(module.filename);
 const sequelize = require('../config/db.js');
 
 Employee.hasMany(Asset);
-Asset.hasMany(Category);
+Category.hasMany(Asset);
 
 sequelize.sync()
     .then(() => {
@@ -21,4 +21,4 @@ sequelize.sync()
         console.log('Error in Synchronizing database:', error);
     });
 
-module.exports = {Employee, Asset};
+module.exports = {Employee, Asset, Category};

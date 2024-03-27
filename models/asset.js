@@ -21,9 +21,6 @@ const User = sequelize.define("asset", {
     },
     assetCost : {
         type: DataTypes.BIGINT
-    },
-    purchaseDate : {
-        type: DataTypes.TEXT
     }
   });
 

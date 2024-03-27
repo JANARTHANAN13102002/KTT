@@ -25,9 +25,6 @@ const User = sequelize.define("employee", {
     role: {
         type: DataTypes.TEXT
     },
-    joiningDate : {
-      type: DataTypes.DATE
-    },
     bloodGroup : {
         type: DataTypes.STRING
     },
@@ -35,7 +32,7 @@ const User = sequelize.define("employee", {
         type: DataTypes.INTEGER
     },
     status   : {
-        type: DataTypes.INTEGER
+        type: DataTypes.TEXT
     },
   });
 
