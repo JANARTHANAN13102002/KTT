@@ -13,9 +13,25 @@ async function fetching(url) {
             data: data, 
             fixedColumns: false,       
             fixedHeader: false, 
-            buttons: ['copy', { extend: 'excel', "title": "Employees" }, { extend: 'pdf', 'title': 'Employee' }], 
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'btn btn-primary btn-sm btn-size',
+                    text: 'Copy'
+                },{
+                    extend: 'excel',
+                    className: 'btn btn-primary btn-sm btn-size',
+                    text: 'Excel',
+                    title: 'Employees'
+                }, {
+                    extend: 'pdf',
+                    className: 'btn btn-primary btn-sm btn-size',
+                    text: 'PDF',
+                    title: 'Employee'
+                }
+            ],
             layout: { 
-                top: 'buttons' 
+                top: 'buttons'
             },             
             scrollY:'40vh', 
             scrollCollapse:true,
@@ -90,7 +106,7 @@ async function fetching(url) {
                     "bSortable": false, 
                     // "Width":"3%", 
                     "render": function (data) { 
-                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a>`
+                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>`
                     } 
                 } 
             ], 

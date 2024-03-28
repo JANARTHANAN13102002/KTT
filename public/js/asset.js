@@ -13,7 +13,23 @@ async function fetching(url) {
             data: data, 
             fixedColumns: false,       
             fixedHeader: false, 
-            buttons: ['copy', { extend: 'excel', "title": "Employees" }, { extend: 'pdf', 'title': 'Employee' }], 
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'btn btn-primary btn-sm btn-size',
+                    text: 'Copy'
+                },{
+                    extend: 'excel',
+                    className: 'btn btn-primary btn-sm btn-size',
+                    text: 'Excel',
+                    title: 'Employees'
+                }, {
+                    extend: 'pdf',
+                    className: 'btn btn-primary btn-sm btn-size',
+                    text: 'PDF',
+                    title: 'Employee'
+                }
+            ],
             layout: { 
                 top: 'buttons' 
             },             
@@ -34,9 +50,16 @@ async function fetching(url) {
                     data: 'serialNumber', 
                      "mData": null, 
                     "bSortable": false, 
-                    "sClass": "alignCenter", 
+                    "sClass": "alignCenter"
                     
                 }, 
+                { 
+                    data: 'employeeName', 
+                    "mData": null, 
+                    "bSortable": false, 
+                 
+                    "sClass": "alignCenter" 
+                },
                 { 
                     data: 'assetName', "mData": null, 
                     "bSortable": false, 
@@ -61,24 +84,18 @@ async function fetching(url) {
                      
                     "sClass": "alignCenter" 
                 }, 
-                { 
-                    data: 'employeeId', "mData": null, 
-                    "bSortable": false, 
+                // { 
+                //     data: 'AssetCategoryId', "mData": null, 
+                //     "bSortable": false, 
                  
-                    // "sClass": "alignCenter" 
-                },
-                { 
-                    data: 'AssetCategoryId', "mData": null, 
-                    "bSortable": false, 
-                 
-                    // "sClass": "alignCenter" 
-                },
+                //     // "sClass": "alignCenter" 
+                // },
                 { 
                     data: null, 
                     "bSortable": false, 
                     // "Width":"3%", 
                     "render": function (data) { 
-                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a>  <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="deleteemployee(this.getAttribute('data-id'))">Delete</a>`
+                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>  <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="deleteemployee(this.getAttribute('data-id'))">Delete</a></div>`
                     } 
                 } 
             ], 
@@ -103,31 +120,30 @@ async function editemployee(id) {
 
         var num = data.serialNumber;
 
-        document.getElementById("snumber").value=num;
-        document.getElementById('aname').value = data.assetName;
+        document.getElementById("snumber").value = num;
+        document.getElementById('select').value = data.employeeName;
+        document.getElementById('aname1').value = data.assetName;
         document.getElementById('bname').value = data.brandName;
         document.getElementById('mname').value = data.model;
         document.getElementById('acost').value = data.assetCost;
-        document.getElementById('eid').value = data.employeeId;
-        document.getElementById('aid').value = data.AssetCategoryId;
 
+        
         const form = document.getElementById('AssetForm');
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             const snumber = document.getElementById('snumber').value;
-            const aname = document.getElementById('aname').value;
+            const ename = document.getElementById('ename').value;
+            const aname = document.getElementById('aname2').value;
             const bname = document.getElementById('bname').value;
             const mname = document.getElementById('mname').value;
             const acost = document.getElementById('acost').value;
-            const eid = document.getElementById('eid').value;
-            const aid = document.getElementById('aid').value;
             
 
             var con =  fetch('/updateAsset', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
-                body: JSON.stringify({ "id" : `${id}`, "snumber" : `${snumber}`, "aname" : `${aname}`, "bname" : `${bname}`, "mname" : `${mname}`
-                , "acost" : `${acost}`, "eid" : `${eid}`, "aid" : `${aid}`})
+                body: JSON.stringify({ "id" : `${id}`, "snumber" : `${snumber}`, "aname" : `${aname}`,"ename" : `${ename}`, "bname" : `${bname}`, "mname" : `${mname}`
+                , "acost" : `${acost}`})
             });
 
             window.location.reload();

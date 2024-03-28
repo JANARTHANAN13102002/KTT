@@ -1,13 +1,13 @@
 const { DataTypes, NUMBER } = require('sequelize');
 const sequelize = require('../config/db');
 
-const User = sequelize.define("AssetCategories", {
+const User = sequelize.define("assetcategory", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    categoryName : {
+    name : {
       type: DataTypes.STRING
     },
   });

@@ -74,15 +74,11 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Asset Form</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Asset History Form</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="employeeForm" method="get" action="/assets">
-                                <div class="mb-3">
-                                    <label for="snumber" class="form-label">Serial Number</label>
-                                    <input type="number" class="form-control" name="snumber" required>
-                                </div>
+                            <form id="AssetHistoryForm">
                                 <div class="mb-3">
                                     <label for="ename" class="form-label">Employee Name</label>
                                     <select name="ename" id="select" class="form-control" required>
@@ -96,21 +92,20 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="bname" class="form-label">Brand Name</label>
-                                    <input type="text" class="form-control" name="bname" required>
+                                    <label for="idate" class="form-label">Issue Date</label>
+                                    <input type="date" class="form-control" id="idate" name="idate" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="mname" class="form-label">Model</label>
-                                    <input type="text" class="form-control" name="mname" required>
+                                    <label for="rdate" class="form-label">Return Date</label>
+                                    <input type="date" class="form-control" id="rdate" name="rdate" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="acost" class="form-label">Asset Cost</label>
-                                    <input type="number" class="form-control" name="acost" required>
+                                    <label for="rdate" class="form-label">Status</label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        <option>Working</option>
+                                        <option>Not Working</option>
+                                    </select>
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="joiningDate" class="form-label">AssetCategory ID</label>
-                                    <input type="number" class="form-control" name="aid" required>
-                                </div> -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -129,27 +124,26 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Asset Table</h1>
+                    <h1 class="mt-4">Asset History Table</h1>
                     <!-- Button to trigger modal -->
                     <div id="form1">
                         <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
-                            Add Asset Details
+                            Add Asset History
                         </button>
                     </div>
 
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="card-body">
-                                <table id="asset_master" class="table table-bordered">
+                                <table id="asset_history" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Serial Number</th>
                                             <th>Employee Name</th>
                                             <th>Asset Name</th>
-                                            <th>Brand Name</th>
-                                            <th>Model</th>
-                                            <th>Asset Cost</th> 
+                                            <th>Issue Date</th>
+                                            <th>Return Date</th> 
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -170,34 +164,33 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="AssetForm" >
-                        <div class="mb-3">
-                            <label for="snumber" class="form-label">Serial Number</label>
-                            <input type="number" id="snumber" class="form-control" name="snumber" required>
-                        </div>
+                    <form id="AssetHistoryForm1">
                         <div class="mb-3">
                             <label for="ename" class="form-label">Employee Name</label>
-                            <select name="ename" id="ename" class="form-control" required>
+                            <select name="ename" id="ename" class="form-control" required> 
                                 <!-- Options will be populated dynamically -->
-                            </select>
+                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="ename" class="form-label">Asset Name</label>
-                            <select id="aname2" class="form-control" name="aname2" required>
+                            <select id="aname2" class="form-control" name="aname2" required> 
                                 <!-- Options will be populated dynamically -->
+                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="idate" class="form-label">Issue Date</label>
+                            <input type="date" class="form-control" id="idate1" name="idate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rdate" class="form-label">Return Date</label>
+                            <input type="date" class="form-control" id="rdate1" name="rdate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rdate" class="form-label">Status</label>
+                            <select class="form-control" id="status" name="status1" required>
+                                <option>Working</option>
+                                <option>Not Working</option>
                             </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="bname" class="form-label">Brand Name</label>
-                            <input type="text" id="bname" class="form-control" name="bname" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mname" class="form-label">Model</label>
-                            <input type="text" id="mname" class="form-control" name="mname" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="acost" class="form-label">Asset Cost</label>
-                            <input type="number" id="acost" class="form-control" name="acost" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -259,7 +252,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="/js/scripts.js"></script>
-    <script src="/js/asset.js"></script>
+    <script src="/js/assethistory.js"></script>
     <script src="/app.js"></script>
     <script src="/js/moment.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>

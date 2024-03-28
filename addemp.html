@@ -46,6 +46,10 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
+                        <a class="nav-link" href="/category">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Asset Categories
+                        </a>
                         <a class="nav-link" href="/addemp">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Employee Details
@@ -54,11 +58,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Asset Master
                         </a>
-                        <a class="nav-link" href="/category">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Asset Categories
-                        </a>
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="/assethistory">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Asset Histories
                         </a>
@@ -66,10 +66,46 @@
                 </div>
             </nav>
         </div>
+        <!-- Table Creation -->
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Employee Tables</h1>
+                        <!-- Button to trigger modal -->
+                        <div id="form1">
+                            <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
+                                Add Employee Details
+                            </button>
+                        </div>
+                    
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <table id="employee_master" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Email ID</th>
+                                            <th>Age</th>
+                                            <th>Mobile</th>
+                                            <th>Address</th>
+                                            <th>Role</th>
+                                            <th>Blood Group</th>
+                                            <th>Salary</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
     </div>
 
-    <div id="layoutSidenav_content">
-        <main>
+        <div id="layoutSidenav_content">
+            <main>
                 <!-- Modal -->
                 <div class="modal fade" id="employeeFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -128,53 +164,12 @@
                         </div>
                     </div>
                 </div>
-        </main>
-    </div>
-    
-
-<!-- Table Creation -->
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Employee Tables</h1>
-                    <!-- Button to trigger modal -->
-                    <div id="form1">
-                        <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
-                            Add Employee Details
-                        </button>
-                    </div>
-                    
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="card-body">
-                                <table id="employee_master" class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>Email ID</th>
-                                            <th>Age</th>
-                                            <th>Mobile</th>
-                                            <th>Address</th>
-                                            <th>Role</th>
-                                            <th>Blood Group</th>
-                                            <th>Salary</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
-    </div>
+    
 
-    <div id="layoutSidenav_content">
-        <main>
+        <div id="layoutSidenav_content">
+            <main>
                 <!-- Modal -->
                 <div class="modal fade" id="editmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -230,8 +225,8 @@
                         </div>
                     </div>
                 </div>
-        </main>
-    </div>
+            </main>
+        </div>
     
 
 

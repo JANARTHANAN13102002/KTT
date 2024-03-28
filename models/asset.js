@@ -10,6 +10,9 @@ const User = sequelize.define("asset", {
     serialNumber: {
       type: DataTypes.INTEGER,
     },
+    employeeName  : {
+        type : DataTypes.STRING
+    },
     assetName  : {
         type : DataTypes.STRING
     },

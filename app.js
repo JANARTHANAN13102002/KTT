@@ -1,14 +1,22 @@
 const express = require('express');
 const sequelize = require('./config/db');
 const bodyParser = require('body-parser');
-const {Employee,Asset,Category} = require('./models/index');
+const {Employee,Asset,Category,AssetHistory} = require('./models/index');
 const path = require('path');
+const { Pool } = require('pg');
 
 const app = express();
 const port = 5100;
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'postgres',
+  password: 'janarthanan',
+});
 
 
 // Creating the Router(API)
@@ -23,6 +31,9 @@ app.use(express.static('public'));
   });
   app.get('/category', (req, res) => {
       res.sendFile(path.join(__dirname,'category.html'));
+  });
+  app.get('/assethistory', (req, res) => {
+      res.sendFile(path.join(__dirname,'assethistory.html'));
   });
   app.get('/login', (req, res) => {
       res.sendFile(path.join(__dirname,'login.html'));
@@ -66,12 +77,11 @@ app.use(express.static('public'));
         try {
           const user = await Asset.create({
             serialNumber : req.query.snumber,
-            assetName : req.query.aname,
+            employeeName : req.query.ename,
+            assetName : req.query.aname1,
             brandName : req.query.bname,
             model: req.query.mname,
-            assetCost : req.query.acost,
-            employeeId : req.query.eid,
-            AssetCategoryId : req.query.aid
+            assetCost : req.query.acost
           });
           res.redirect(req.get('referer'));
         } catch (error) {
@@ -84,7 +94,7 @@ app.use(express.static('public'));
       app.get('/categorys', async (req, res) => {
         try {
           const user = await Category.create({
-            categoryName : req.query.cname
+            name : req.query.cname
           });
           console.log(user);
           res.redirect(req.get('referer'));
@@ -94,7 +104,23 @@ app.use(express.static('public'));
         }
       });
 
-
+  //Creating Asset History table
+      app.post('/assethistorycreate', async (req, res) => {
+        try {
+          const user = await AssetHistory.create({
+            employeeName : req.body.ename,
+            assetName : req.body.aname,
+            issueDate : req.body.idate,
+            returnDate : req.body.rdate,
+            status : req.body.status,
+          });
+          console.log(user);
+          res.send("result");
+        } catch (error) {
+          console.error('Error creating user:', error);
+          res.status(500).send('Internal Server Error');
+        }
+      });
 
 // Displaying the Table
     // Displaying the Employees Table
@@ -122,13 +148,24 @@ app.use(express.static('public'));
     // Displaying the Asset Categorys Table
         app.get('/categoryfetch', async (req, res) => {
           try {
-            const user = await Category .findAll();
+            const user = await Category.findAll();
             res.send(user);
           } catch (error) {
             console.error('Error creating user:', error);
             res.status(500).send('Internal Server Error');
           }
         });
+
+    // Displaying the Asset History Table
+      app.get('/assethistoryfetch', async (req, res) => {
+        try {
+          const user = await AssetHistory.findAll();
+          res.send(user);
+        } catch (error) {
+          console.error('Error creating user:', error);
+          res.status(500).send('Internal Server Error');
+        }
+      });
 
 
 // Updating the DataBase Values
@@ -176,12 +213,11 @@ app.use(express.static('public'));
             const employeeId = req.body.id;
             const user = await Asset.update({
               serialNumber: req.body.snumber,
+              employeeName: req.body.ename,
               assetName: req.body.aname,
               brandName : req.body.bname,
               model: req.body.mname,
-              assetCost : req.body.acost,
-              employeeId :  req.body.eid,
-              AssetCategoryId : req.body.aid,
+              assetCost : req.body.acost
             },
             {
               where: { id: employeeId }
@@ -190,6 +226,25 @@ app.use(express.static('public'));
           } catch (error) {
             console.error('Error creating user:', error);
             res.status(500).send('Internal Server Error');
+          }
+        });
+
+        app.get('/options', async (req, res) => {
+          try {
+              const { rows } = await pool.query('SELECT id, name FROM employees');
+              res.json(rows);
+          } catch (err) {
+              console.error('Error executing query', err);
+              res.status(500).json({ error: 'Internal Server Error' });
+          }
+        });
+        app.get('/assetcategoryname', async (req, res) => {
+          try {
+              const { rows } = await pool.query('SELECT id, name FROM assetcategories');
+              res.json(rows);
+          } catch (err) {
+              console.error('Error executing query', err);
+              res.status(500).json({ error: 'Internal Server Error' });
           }
         });
 
@@ -206,7 +261,7 @@ app.use(express.static('public'));
             try {
               const employeeId = req.body.id;
               const user = await Category.update({
-                categoryName: req.body.cname
+                name: req.body.cname
               },
               {
                 where: { id: employeeId }
@@ -216,6 +271,34 @@ app.use(express.static('public'));
               res.status(500).send('Internal Server Error');
             }
           });
+
+    // Asset History table
+          app.post('/edithistory', async (req, res) => {
+            const {id} = req.body;
+            const results = await AssetHistory.findOne({where:{id : id}});
+            res.send(results);
+          });
+
+          app.post('/updateassethistory', async (req, res) => {
+            try {
+              const employeeId = req.body.id;
+              const user = await AssetHistory.update({
+                  employeeName : req.body.ename,
+                  assetName : req.body.aname,
+                  issueDate : req.body.idate,
+                  returnDate : req.body.rdate,
+                  status : req.body.status,
+              },
+              {
+                where: { id: employeeId }
+              });
+            } catch (error) {
+              console.error('Error creating user:', error);
+              res.status(500).send('Internal Server Error');
+            }
+          });
+
+
 
 // Delete Asset Details
       app.delete('/deleteEmployee', async (req, res) => {

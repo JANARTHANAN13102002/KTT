@@ -1,6 +1,7 @@
 const Employee = require('./employee.js');
 const Asset = require('./asset.js');
 const Category = require('./category.js');
+const AssetHistory = require('./assethistory.js');
 const fs = require('fs');
 const path = require('path');
 const { Sequelize } = require('sequelize');
@@ -9,6 +10,9 @@ const sequelize = require('../config/db.js');
 
 Employee.hasMany(Asset);
 Category.hasMany(Asset);
+
+Asset.hasMany(AssetHistory);
+Employee.hasMany(AssetHistory);
 
 sequelize.sync()
     .then(() => {
@@ -21,4 +25,4 @@ sequelize.sync()
         console.log('Error in Synchronizing database:', error);
     });
 
-module.exports = {Employee, Asset, Category};
+module.exports = {Employee, Asset, Category,AssetHistory};
