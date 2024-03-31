@@ -1,28 +1,4 @@
-    
-    fun();
-    async function fun(){
-        const form = document.getElementById('AssetHistoryForm');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const ename = document.getElementById('select').value;
-            const aname = document.getElementById('aname1').value;
-            const idate = document.getElementById('idate').value;
-            const rdate = document.getElementById('rdate').value;
-            const status = document.getElementById('status').value;
-            
-            var con = fetch('/assethistorycreate', {
-                method: "POST",
-                headers: { "Content-Type" : "application/json" },
-                body: JSON.stringify({ "ename" : `${ename}`, "aname" : `${aname}`, "idate" : `${idate}`, "rdate" : `${rdate}`, "status" : `${status}`})
-            });
-            
-            window.location.reload();
-        });
-    }
-
-
-
-    fetching('/assethistoryfetch')
+        fetching('/assethistoryfetch')
     async function fetching(url) { 
         try { 
             var res = await fetch(url); 
@@ -94,13 +70,6 @@
                         "bSortable": false, 
                         "render" : (data) => moment(data).format('LL'),
                         "sClass": "alignCenter" 
-                    }, 
-                    { 
-                        data: 'status',  
-                        "mData": null, 
-                        "bSortable": false, 
-                        
-                        "sClass": "alignCenter" 
                     },
                     { 
                         data: null, 
@@ -134,14 +103,9 @@ async function editemployee(id) {
         var num = data.employeeName;
         document.getElementById("ename").value = num;
         document.getElementById('aname2').value = data.assetName;
-        document.getElementById('idate').value =  data.issueDate 
-        document.getElementById('rdate').value = data.returnDate;
-        document.getElementById('status').value = data.status;
-
-    } catch (error) {
-        console.error('Error editing employee:', error);
-    }
-}
+        document.getElementById('idate1').value = moment(data.issueDate).format('YYYY-MM-DD');  
+        document.getElementById('rdate1').value = moment(data.returnDate).format('YYYY-MM-DD'); 
+        // document.getElementById('status1').value = data.status;
 
         const form = document.getElementById('AssetHistoryForm');
         form.addEventListener('submit', function(event) {
@@ -150,28 +114,35 @@ async function editemployee(id) {
             const aname = document.getElementById('aname2').value;
             const idate = document.getElementById('idate1').value;
             const rdate = document.getElementById('rdate1').value;
-            const status = document.getElementById('status1').value;
+            // const status = document.getElementById('status1').value;
 
             var con = fetch('/updateassethistory', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
-                body: JSON.stringify({ "ename" : `${ename}`, "aname" : `${aname}`, "idate" : `${idate}`, "rdate" : `${rdate}`, "status" : `${status}`})
+                body: JSON.stringify({ "ename" : `${ename}`, "aname" : `${aname}`, "idate" : `${idate}`, "rdate" : `${rdate}`})
             });
             window.location.reload();
 
         });
 
+    } catch (error) {
+        console.error('Error editing employee:', error);
+    }
+}
 
-// async function deleteemployee(id) {
-//     try {
-//         var con = await fetch('/deleteEmployee', {
-//             method: "DELETE",
-//             headers: { "Content-Type" : "application/json" },
-//             body: JSON.stringify({ "id" : `${id}` })
-//         });
-//         window.location.reload();
-//     } catch (error) {
-//         console.error('Error editing employee:', error);
-//     }
-// }
+        
+
+
+async function deleteemployee(id) {
+    try {
+        var con = await fetch('/deleteassetHistory', {
+            method: "DELETE",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ "id" : `${id}` })
+        });
+        window.location.reload();
+    } catch (error) {
+        console.error('Error editing employee:', error);
+    }
+}
 

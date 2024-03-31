@@ -1,3 +1,13 @@
+// const { Pool } = require('pg');
+
+// const pool = new Pool({
+//   user: 'postgre',
+//   host: 'localhost',
+//   database: 'postgre',
+//   password: 'janarthanan'
+// });
+
+
 fetching('/assetfetch')
 async function fetching(url) { 
     try { 
@@ -54,13 +64,6 @@ async function fetching(url) {
                     
                 }, 
                 { 
-                    data: 'employeeName', 
-                    "mData": null, 
-                    "bSortable": false, 
-                 
-                    "sClass": "alignCenter" 
-                },
-                { 
                     data: 'assetName', "mData": null, 
                     "bSortable": false, 
                      
@@ -95,7 +98,9 @@ async function fetching(url) {
                     "bSortable": false, 
                     // "Width":"3%", 
                     "render": function (data) { 
-                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>  <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="deleteemployee(this.getAttribute('data-id'))">Delete</a></div>`
+                        return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>  <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="deleteemployee(this.getAttribute('data-id'))">Delete</a></div>
+                        <div class="mx-auto"><a class="btn btn-info btn-sm btn-size " data-id =  ${data.id}   onclick="issueemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#issuemodalId">Issue</a></div>
+                        <div class="mx-auto"><a class="btn btn-primary btn-sm btn-size " data-id =  ${data.id}   onclick="returnemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#returnmodalId">Return</a></div>`
                     } 
                 } 
             ], 
@@ -108,6 +113,8 @@ async function fetching(url) {
     } 
 }
 
+
+// Edit Asset Details
 async function editemployee(id) {
     try {
         var con = await fetch('/editasset', {
@@ -121,8 +128,7 @@ async function editemployee(id) {
         var num = data.serialNumber;
 
         document.getElementById("snumber").value = num;
-        document.getElementById('select').value = data.employeeName;
-        document.getElementById('aname1').value = data.assetName;
+        document.getElementById('aname2').value = data.assetName;
         document.getElementById('bname').value = data.brandName;
         document.getElementById('mname').value = data.model;
         document.getElementById('acost').value = data.assetCost;
@@ -132,7 +138,6 @@ async function editemployee(id) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             const snumber = document.getElementById('snumber').value;
-            const ename = document.getElementById('ename').value;
             const aname = document.getElementById('aname2').value;
             const bname = document.getElementById('bname').value;
             const mname = document.getElementById('mname').value;
@@ -142,7 +147,7 @@ async function editemployee(id) {
             var con =  fetch('/updateAsset', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
-                body: JSON.stringify({ "id" : `${id}`, "snumber" : `${snumber}`, "aname" : `${aname}`,"ename" : `${ename}`, "bname" : `${bname}`, "mname" : `${mname}`
+                body: JSON.stringify({ "id" : `${id}`, "snumber" : `${snumber}`, "aname" : `${aname}`, "bname" : `${bname}`, "mname" : `${mname}`
                 , "acost" : `${acost}`})
             });
 
@@ -155,6 +160,7 @@ async function editemployee(id) {
 }
 
 
+// Delete Asset Details
 async function deleteemployee(id) {
     try {
         var con = await fetch('/deleteEmployee', {
@@ -168,3 +174,96 @@ async function deleteemployee(id) {
     }
 }
 
+
+// Issue Asset Details
+async function issueemployee(id) {
+    try {
+        var con = await fetch('/editasset', {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ "id" : `${id}` })
+        });
+
+        var data = await con.json();
+
+        
+        var assetName = data.assetName;
+
+        const form = document.getElementById('issueassetForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const issueid = document.getElementById('issueid').value;
+            const issuename = document.getElementById('issuename').value;
+            const idate = document.getElementById('idate').value;
+
+            var con =  fetch('/updateassethistory', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({"issueid" : `${issueid}`, "issuename" : `${issuename}`, "assetName" : `${assetName}`, "idate" : `${idate}` , "id" : `${id}` })
+            });
+
+            var con =  fetch('/updateAssetEid', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({"eid" : `${issueid}`, "id" : `${id}` })
+            });
+
+            window.location.reload();
+        });
+
+    } catch (error) {
+        console.error('Error editing employee:', error);
+    }
+}
+
+
+// Return Asset Details
+async function returnemployee(id) {
+    try {
+        var con = await fetch('/edithistory', {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ "id" : `${id}` })
+        });
+
+        var data = await con.json();
+        
+
+        document.getElementById("rissueid").value = data.employeeId;
+        document.getElementById("rissuename").value = data.employeeName;
+        document.getElementById("returnissuedate").value = moment(data.issueDate).format('DD-MM-YYYY');
+
+        const form = document.getElementById('returnassetForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const rdate = document.getElementById('returndate').value;
+            
+            var con =  fetch('/updateAssetreturn', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({ "id" : `${data.id}`, "rdate" : `${rdate}`})
+            });
+
+            window.location.reload();
+        });
+
+
+    } catch (error) {
+        console.error('Error editing employee:', error);
+    }
+}
+
+// async function getIdFromEmployeeId(employeeId) {
+//     try {
+//       const query = {
+//         text: 'SELECT id FROM assethistories WHERE employeeId = $1',
+//         values: [employeeId],
+//       };
+  
+//       const result = await pool.query(query);
+//       return result.rows[0].id;
+//     } catch (error) {
+//       console.error('Error fetching ID from employeeId:', error);
+//       throw error;
+//     }
+//   }

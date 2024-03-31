@@ -10874,8 +10874,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 0;
-  flex-grow: 0.3;
+  min-width: 100%;
+  flex-grow: 1;
   min-height: calc(100vh - 560px);
   margin-left: -225px;
 }
@@ -11255,4 +11255,9 @@ body {
 .btn-size {
   /* width: 80px; */
   margin-top: 2px;
+}
+
+
+.custom-card-width {
+  width: 100%; /* Set the desired width */
 }
