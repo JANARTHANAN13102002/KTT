@@ -54,6 +54,9 @@ const pool = new Pool({
     //Creating Employees table
         app.get('/submit', async (req, res) => {
             try {
+              const sal =  req.query.salary;
+              if(sal < 0) sal = 0;
+              else sal;
               const user = await Employee.create({
                 name: req.query.name,
                 email: req.query.email,
@@ -62,7 +65,7 @@ const pool = new Pool({
                 address : req.query.address,
                 role :  req.query.role,
                 bloodGroup : req.query.bgroup,
-                salary : req.query.salary,
+                salary : sal,
                 status : req.query.status,
               });
               res.redirect(req.get('referer'));
@@ -179,6 +182,9 @@ const pool = new Pool({
         app.post('/updateEmployee', async (req, res) => {
           try {
             const employeeId = req.body.id;
+            const sal =  req.query.salary;
+              if(sal < 0) sal = 0;
+              else sal;
             const user = await Employee.update({
               name: req.body.name,
               email: req.body.email,
@@ -187,7 +193,7 @@ const pool = new Pool({
               address : req.body.address,
               role :  req.body.role,
               bloodGroup : req.body.bgroup,
-              salary : req.body.salary,
+              salary : sal,
               status : req.body.status,
             },
             {
@@ -221,6 +227,22 @@ const pool = new Pool({
             },
             {
               where: { id: employeeId }
+            });
+            
+          } catch (error) {
+            console.error('Error creating user:', error);
+            res.status(500).send('Internal Server Error');
+          }
+        });
+
+        app.post('/updateAssetEid', async (req, res) => {
+          try {
+            const id = req.body.id;
+            const user = await Asset.update({
+              employeeId : req.body.eid,
+            },
+            {
+              where: { id: id }
             });
             
           } catch (error) {
@@ -275,22 +297,18 @@ const pool = new Pool({
     // Asset History table
           app.post('/edithistory', async (req, res) => {
             const {id} = req.body;
-            const results = await AssetHistory.findOne({where:{id : id}});
+            const results = await AssetHistory.findOne({where:{assetId : id}});
             res.send(results);
           });
 
           app.post('/updateassethistory', async (req, res) => {
             try {
-              const employeeId = req.body.id;
-              const user = await AssetHistory.update({
-                  employeeName : req.body.ename,
-                  assetName : req.body.aname,
+              const user = await AssetHistory.create({
+                  employeeName : req.body.issuename,
+                  assetName : req.body.assetName,
                   issueDate : req.body.idate,
-                  returnDate : req.body.rdate,
-                  status : req.body.status,
-              },
-              {
-                where: { id: employeeId }
+                  assetId : req.body.id,
+                  employeeId : req.body.issueid,
               });
             } catch (error) {
               console.error('Error creating user:', error);
@@ -298,12 +316,59 @@ const pool = new Pool({
             }
           });
 
+          app.post('/updateAssetreturn', async (req, res) => {
+            try {
+              const employeeId = req.body.id;
+              const user = await AssetHistory.update({
+                  returnDate: req.body.rdate,
+                  // employeeId : 0,
+                },
+                {
+                  where: { id: employeeId }
+                });
+              console.log(user);
+            } catch (error) {
+              console.error('Error creating user:', error);
+              res.status(500).send('Internal Server Error');
+            }
+          });
+
+          // async function getIdFromEmployeeId(employeeId) {
+          //   try {
+          //     const query = {
+          //       text: 'SELECT id FROM AssetHistory WHERE employeeId = $1',
+          //       values: [employeeId],
+          //     };
+          
+          //     const result = await pool.query(query);
+          //     return result.rows[0].id;
+          //   } catch (error) {
+          //     console.error('Error fetching ID from employeeId:', error);
+          //     throw error;
+          //   }
+          // }
+
+
+          // app.post('/addissuename', async (req, res) => {
+          //   const {id} = req.body;
+          //   const results = await AssetHistory.findOne({where:{id : id}});
+          //   res.send(results);
+          // });
+  
+
 
 
 // Delete Asset Details
       app.delete('/deleteEmployee', async (req, res) => {
         const {id} = req.body;
         const result = await Asset.destroy({where:{id : id}});
+        res.send("result");
+      });     
+
+// Delete Asset History Details
+      app.delete('/deleteassetHistory', async (req, res) => {
+        const {id} = req.body;
+        const result = await AssetHistory.destroy({where:{id : id}});
         res.send("result");
       });          
 

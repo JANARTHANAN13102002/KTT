@@ -84,12 +84,6 @@
                                     <input type="number" class="form-control" name="snumber" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="ename" class="form-label">Employee Name</label>
-                                    <select name="ename" id="select" class="form-control" required>
-                                        <!-- Options will be populated dynamically -->
-                                    </select>
-                                </div>
-                                <div class="mb-3">
                                     <label for="aname" class="form-label">Asset Name</label>
                                     <select name="aname1" id="aname1" class="form-control" required>
                                         <!-- Options will be populated dynamically -->
@@ -107,10 +101,6 @@
                                     <label for="acost" class="form-label">Asset Cost</label>
                                     <input type="number" class="form-control" name="acost" required>
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="joiningDate" class="form-label">AssetCategory ID</label>
-                                    <input type="number" class="form-control" name="aid" required>
-                                </div> -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -138,14 +128,12 @@
                     </div>
 
                     <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="card-body">
+                        <div class="card-body custom-card-width">
                                 <table id="asset_master" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
                                             <th>Serial Number</th>
-                                            <th>Employee Name</th>
                                             <th>Asset Name</th>
                                             <th>Brand Name</th>
                                             <th>Model</th>
@@ -154,7 +142,6 @@
                                         </tr>
                                     </thead>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,6 +149,8 @@
         </div>
     </div>
 
+
+<!-- Edit Form -->
     <div class="modal fade" id="editmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,12 +163,6 @@
                         <div class="mb-3">
                             <label for="snumber" class="form-label">Serial Number</label>
                             <input type="number" id="snumber" class="form-control" name="snumber" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="ename" class="form-label">Employee Name</label>
-                            <select name="ename" id="ename" class="form-control" required>
-                                <!-- Options will be populated dynamically -->
-                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="ename" class="form-label">Asset Name</label>
@@ -209,29 +192,92 @@
         </div>
     </div>
 
+<!-- Issue Form -->
+    <div id="layoutSidenav_content">
+        <main>
+            <!-- Modal -->
+            <div class="modal fade" id="issuemodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Issue Form</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="issueassetForm">
+                                <div class="mb-3">
+                                    <label for="issueid" class="form-label">Employee ID</label>
+                                    <select name="issueid" id="issueid" class="form-control" required>
+                                        <!-- Options will be populated dynamically -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="issuename" class="form-label">Employee Name</label>
+                                    <select name="issuename" id="issuename" class="form-control" required>
+                                        <!-- Options will be populated dynamically -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="idate" class="form-label">Issue Date</label>
+                                    <input type="date" id="idate" name="idate" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+<!-- Return Form -->
+<div id="layoutSidenav_content">
+    <main>
+        <!-- Modal -->
+        <div class="modal fade" id="returnmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Return Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="returnassetForm">
+                            <div class="mb-3">
+                                <label for="issueid" class="form-label">Employee ID</label>
+                                <input type="text" id="rissueid" name="rissueid" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="issuename" class="form-label">Employee Name</label>
+                                <input type="text" id="rissuename" name="rissuename" class="form-control" readonly>
+                            
+                            </div>
+                            <div class="mb-3">
+                                <label for="returnissuedate" class="form-label">Issue Date</label>
+                                <input type="text" id="returnissuedate" name="returnissuedate" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="returndate" class="form-label">Return Date</label>
+                                <input type="date" id="returndate" name="returndate" class="form-control">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
     <script>
-        fetch('/options')
-            .then(response => response.json())
-            .then(data => {
-                const selectElement = document.getElementById('select');
-                data.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.name;
-                    optionElement.textContent = option.name;
-                    selectElement.appendChild(optionElement);
-                });
-            });
-        fetch('/options')
-            .then(response => response.json())
-            .then(data => {
-                const selectElement = document.getElementById('ename');
-                data.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.name;
-                    optionElement.textContent = option.name;
-                    selectElement.appendChild(optionElement);
-            });
-        });
         fetch('/assetcategoryname')
             .then(response => response.json())
             .then(data => {
@@ -239,7 +285,7 @@
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
-                    optionElement.textContent = option.name;
+                    optionElement.textContent = `${option.name}`;
                     selectElement.appendChild(optionElement);
             });
         });
@@ -251,7 +297,52 @@
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
-                    optionElement.textContent = option.name;
+                    optionElement.textContent = `${option.name}`;
+                    selectElement.appendChild(optionElement);
+            });
+        });
+        fetch('/options')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('issueid');
+                data.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.id;
+                    optionElement.textContent = `${option.id}`;
+                    selectElement.appendChild(optionElement);
+            });
+        });
+
+        fetch('/options')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('issuename');
+                data.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.name;
+                    optionElement.textContent = `${option.name}`;
+                    selectElement.appendChild(optionElement);
+            });
+        });
+        fetch('/options')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('rissuename');
+                data.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.name;
+                    optionElement.textContent = `${option.name}`;
+                    selectElement.appendChild(optionElement);
+            });
+        });
+        fetch('/options')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('rissueid');
+                data.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.id;
+                    optionElement.textContent = `${option.id}`;
                     selectElement.appendChild(optionElement);
             });
         });
