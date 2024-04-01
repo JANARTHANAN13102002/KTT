@@ -75,7 +75,6 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Asset History Table</h1>
-
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="card-body">
@@ -87,6 +86,7 @@
                                             <th>Asset Name</th>
                                             <th>Issue Date</th>
                                             <th>Return Date</th> 
+                                            <th>Reason</th> 
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -103,11 +103,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Asset Form</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit History Form</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="AssetHistoryForm1">
+                    <form id="AssetHistoryForm">
                         <div class="mb-3">
                             <label for="ename" class="form-label">Employee Name</label>
                             <select name="ename" id="ename" class="form-control" required> 
@@ -128,6 +128,10 @@
                             <label for="rdate" class="form-label">Return Date</label>
                             <input type="date" class="form-control" id="rdate1" name="rdate" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Reason</label>
+                            <input type="text" class="form-control" id="notes" name="notes" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -137,6 +141,46 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="scarpmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Scarp Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="AssetScarpForm">
+                        <div class="mb-3">
+                            <label for="scarpname" class="form-label">Employee Name</label>
+                            <select name="scarpname" id="scarpname" class="form-control" required> 
+                                <!-- Options will be populated dynamically -->
+                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="scarpassetname" class="form-label">Asset Name</label>
+                            <select id="scarpassetname" class="form-control" name="scarpassetname" required> 
+                                <!-- Options will be populated dynamically -->
+                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sdate" class="form-label">Scarp Date</label>
+                            <input type="date" class="form-control" id="sdate" name="sdate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Reason</label>
+                            <input type="text" class="form-control" id="reason" name="reason" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         fetch('/options')

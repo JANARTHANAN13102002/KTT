@@ -33,7 +33,7 @@ async function fetching(url) {
             layout: { 
                 top: 'buttons' 
             },             
-            scrollY:'40vh', 
+            scrollY:'50vh', 
             scrollCollapse:true, 
             columnDefs: [ 
                 { 'className': "dt-head-center", 'targets':'_all' }, 

@@ -13,6 +13,7 @@ async function fetching(url) {
             data: data, 
             fixedColumns: false,       
             fixedHeader: false, 
+            searching: true,
             buttons: [
                 {
                     extend: 'copy',
@@ -28,16 +29,16 @@ async function fetching(url) {
                     className: 'btn btn-primary btn-sm btn-size',
                     text: 'PDF',
                     title: 'Employee'
-                }
+                } 
             ],
             layout: { 
                 top: 'buttons'
             },             
-            scrollY:'40vh', 
+            scrollY:'50vh', 
             scrollCollapse:true,
             columnDefs: [ 
                 { 'className': "dt-head-center", 'targets':'_all' }, 
-                {"className": "text-center", "targets":[]} 
+                {"className": "text-center", "targets":[]} ,
               ], 
               
             columns: [ 
@@ -121,6 +122,42 @@ async function fetching(url) {
 
 
 
+
+
+        const form = document.getElementById('employeeForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+            const mnumber = document.getElementById('mnumber').value;
+            const address = document.getElementById('address').value;
+            const role = document.getElementById('role').value;
+            const bgroup = document.getElementById('bgroup').value;
+            let salary = document.getElementById('salary').value;
+            const status = document.getElementById('statusSelect').value;
+
+            if(salary < 0) 
+            {
+                window.alert("Salary is in Negative Value. The Salary will become 0");
+                salary = 0;
+            }
+
+            var con =  fetch('/submit', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({ "name" : `${name}`, "email" : `${email}`, "age" : `${age}`, "mnumber" : `${mnumber}`,
+                "address" : `${address}`, "role" : `${role}`, "bgroup" : `${bgroup}`, "salary" : `${salary}`, "status" : `${status}`})
+            });
+
+            window.location.reload();
+        });
+
+
+
+
+
 async function editemployee(id) {
     try {
         var con = await fetch('/employees', {
@@ -132,7 +169,7 @@ async function editemployee(id) {
         var data = await con.json();
         var name = data.name;
 
-        console.log(data.joiningDate+" "+data.bloodGroup +" "+data.status+" "+data.salary+ " "+name);
+        // console.log(data.joiningDate+" "+data.bloodGroup +" "+data.status+" "+data.salary+ " "+name);
         document.getElementById('name').value = name;
         document.getElementById('email').value = data.email;
         document.getElementById('age').value = data.age;
@@ -154,9 +191,15 @@ async function editemployee(id) {
             const address = document.getElementById('address').value;
             const role = document.getElementById('role').value;
             const bgroup = document.getElementById('bgroup').value;
-            const salary = document.getElementById('salary').value;
+            let salary = document.getElementById('salary').value;
             const status = document.getElementById('status').value;
             
+            if(salary < 0) 
+            {
+                window.alert("Salary is in Negative Value. The Salary will become 0");
+                salary = 0;
+            }
+
             var con =  fetch('/updateEmployee', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },

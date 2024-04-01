@@ -121,6 +121,7 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Asset Table</h1>
                     <!-- Button to trigger modal -->
+                    </select>
                     <div id="form1">
                         <button type="button" id ="form1" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#employeeFormModal">
                             Add Asset Details
@@ -205,12 +206,12 @@
                         </div>
                         <div class="modal-body">
                             <form id="issueassetForm">
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="issueid" class="form-label">Employee ID</label>
                                     <select name="issueid" id="issueid" class="form-control" required>
-                                        <!-- Options will be populated dynamically -->
+                                        
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="mb-3">
                                     <label for="issuename" class="form-label">Employee Name</label>
                                     <select name="issuename" id="issuename" class="form-control" required>
@@ -247,10 +248,10 @@
                     </div>
                     <div class="modal-body">
                         <form id="returnassetForm">
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="issueid" class="form-label">Employee ID</label>
                                 <input type="text" id="rissueid" name="rissueid" class="form-control" readonly>
-                            </div>
+                            </div> -->
                             <div class="mb-3">
                                 <label for="issuename" class="form-label">Employee Name</label>
                                 <input type="text" id="rissuename" name="rissuename" class="form-control" readonly>
@@ -264,6 +265,10 @@
                                 <label for="returndate" class="form-label">Return Date</label>
                                 <input type="date" id="returndate" name="returndate" class="form-control">
                             </div>
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Reason</label>
+                                <input type="text" id="notes" name="notes" class="form-control">
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -276,6 +281,51 @@
     </main>
 </div>
 
+<!--  Scarp Form -->
+<div id="layoutSidenav_content">
+    <main>
+        <div class="modal fade" id="scarpmodalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Scarp Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="AssetScarpForm">
+                            <div class="mb-3">
+                                <label for="scarpname" class="form-label">Employee Name</label>
+                                <select name="scarpname" id="scarpname" class="form-control" required> 
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="scarpassetname" class="form-label">Asset Name</label>
+                                <input id="scarpassetname" class="form-control" name="scarpassetname" readonly> 
+                            </div>
+                            <div class="mb-3">
+                                <label for="pdate" class="form-label">Purchase Date</label>
+                                <input type="date" class="form-control" id="pdate" name="pdate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sdate" class="form-label">Scarp Date</label>
+                                <input type="date" class="form-control" id="sdate" name="sdate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reason" class="form-label">Reason</label>
+                                <input type="text" class="form-control" id="reason" name="reason" value="Scarp" >
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+</div>
 
     <script>
         fetch('/assetcategoryname')
@@ -304,11 +354,11 @@
         fetch('/options')
             .then(response => response.json())
             .then(data => {
-                const selectElement = document.getElementById('issueid');
+                const selectElement = document.getElementById('scarpname');
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
-                    optionElement.value = option.id;
-                    optionElement.textContent = `${option.id}`;
+                    optionElement.value = option.name;
+                    optionElement.textContent = `${option.id} - ${option.name}`;
                     selectElement.appendChild(optionElement);
             });
         });
@@ -320,7 +370,7 @@
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
-                    optionElement.textContent = `${option.name}`;
+                    optionElement.textContent = `${option.id} - ${option.name}`;
                     selectElement.appendChild(optionElement);
             });
         });
@@ -331,18 +381,7 @@
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
-                    optionElement.textContent = `${option.name}`;
-                    selectElement.appendChild(optionElement);
-            });
-        });
-        fetch('/options')
-            .then(response => response.json())
-            .then(data => {
-                const selectElement = document.getElementById('rissueid');
-                data.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.id;
-                    optionElement.textContent = `${option.id}`;
+                    optionElement.textContent = `${option.id} - ${option.name}`;
                     selectElement.appendChild(optionElement);
             });
         });

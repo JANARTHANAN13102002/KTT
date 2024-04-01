@@ -52,23 +52,20 @@ const pool = new Pool({
 
 // Adding Values Into Employee DataBase
     //Creating Employees table
-        app.get('/submit', async (req, res) => {
+        app.post('/submit', async (req, res) => {
             try {
-              const sal =  req.query.salary;
-              if(sal < 0) sal = 0;
-              else sal;
               const user = await Employee.create({
-                name: req.query.name,
-                email: req.query.email,
-                age : req.query.age,
-                mobile: req.query.mnumber,
-                address : req.query.address,
-                role :  req.query.role,
-                bloodGroup : req.query.bgroup,
-                salary : sal,
-                status : req.query.status,
+                name: req.body.name,
+                email: req.body.email,
+                age : req.body.age,
+                mobile: req.body.mnumber,
+                address : req.body.address,
+                role :  req.body.role,
+                bloodGroup : req.body.bgroup,
+                salary : req.body.salary,
+                status : req.body.status,
               });
-              res.redirect(req.get('referer'));
+              res.send(user);
             } catch (error) {
               console.error('Error creating user:', error);
               res.status(500).send('Internal Server Error');
@@ -182,9 +179,6 @@ const pool = new Pool({
         app.post('/updateEmployee', async (req, res) => {
           try {
             const employeeId = req.body.id;
-            const sal =  req.query.salary;
-              if(sal < 0) sal = 0;
-              else sal;
             const user = await Employee.update({
               name: req.body.name,
               email: req.body.email,
@@ -193,7 +187,7 @@ const pool = new Pool({
               address : req.body.address,
               role :  req.body.role,
               bloodGroup : req.body.bgroup,
-              salary : sal,
+              salary : req.query.salary,
               status : req.body.status,
             },
             {
@@ -227,22 +221,6 @@ const pool = new Pool({
             },
             {
               where: { id: employeeId }
-            });
-            
-          } catch (error) {
-            console.error('Error creating user:', error);
-            res.status(500).send('Internal Server Error');
-          }
-        });
-
-        app.post('/updateAssetEid', async (req, res) => {
-          try {
-            const id = req.body.id;
-            const user = await Asset.update({
-              employeeId : req.body.eid,
-            },
-            {
-              where: { id: id }
             });
             
           } catch (error) {
@@ -297,18 +275,47 @@ const pool = new Pool({
     // Asset History table
           app.post('/edithistory', async (req, res) => {
             const {id} = req.body;
-            const results = await AssetHistory.findOne({where:{assetId : id}});
+            const results = await AssetHistory.findOne({
+              where: { assetId: id },
+              order: [['returnDate', 'DESC']], 
+              limit: 1
+            });
+            res.send(results);
+          });
+
+          app.post('/editHistoryName', async (req, res) => {
+            const {id} = req.body;
+            const results = await AssetHistory.findOne({ where: { id: id }});
             res.send(results);
           });
 
           app.post('/updateassethistory', async (req, res) => {
+            try {
+              const Id = req.body.id;
+              const user = await AssetHistory.update({
+                  employeeName : req.body.issuename,
+                  assetName : req.body.assetName,
+                  issueDate : req.body.idate,
+                  returnDate : req.body.rdate,
+                  notes : req.body.notes,
+              },
+              {
+                where : {id : Id}
+              });
+            } catch (error) {
+              console.error('Error creating user:', error);
+              res.status(500).send('Internal Server Error');
+            }
+          });
+
+          app.post('/EditAssetHistory', async (req, res) => {
             try {
               const user = await AssetHistory.create({
                   employeeName : req.body.issuename,
                   assetName : req.body.assetName,
                   issueDate : req.body.idate,
                   assetId : req.body.id,
-                  employeeId : req.body.issueid,
+                  notes : req.body.notes,
               });
             } catch (error) {
               console.error('Error creating user:', error);
@@ -318,15 +325,31 @@ const pool = new Pool({
 
           app.post('/updateAssetreturn', async (req, res) => {
             try {
-              const employeeId = req.body.id;
-              const user = await AssetHistory.update({
-                  returnDate: req.body.rdate,
-                  // employeeId : 0,
-                },
-                {
-                  where: { id: employeeId }
-                });
-              console.log(user);
+              const Id = req.body.id;
+              const updatedAssetHistory = await AssetHistory.update({
+                returnDate: req.body.rdate,
+                notes: req.body.notes, 
+              }, {
+                where: { id: Id }
+              });
+              res.send(updatedAssetHistory);
+            } catch (error) {
+              console.error('Error updating asset history:', error);
+              res.status(500).send('Internal Server Error');
+            }
+          });
+
+          app.post('/updatescarp', async (req, res) => {
+            try {
+              const user = await AssetHistory.create({
+                employeeName : req.body.scarpname,
+                assetName : req.body.scarpassetname,
+                issueDate : req.body.pdate,
+                returnDate : req.body.sdate,
+                notes : req.body.reason,
+              
+              });
+              
             } catch (error) {
               console.error('Error creating user:', error);
               res.status(500).send('Internal Server Error');

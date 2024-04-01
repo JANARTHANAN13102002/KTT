@@ -33,7 +33,7 @@
                 layout: { 
                     top: 'buttons' 
                 },             
-                scrollY:'40vh', 
+                scrollY:'50vh', 
                 scrollCollapse:true, 
                 columnDefs: [ 
                     { 'className': "dt-head-center", 'targets':'_all' }, 
@@ -72,6 +72,12 @@
                         "sClass": "alignCenter" 
                     },
                     { 
+                        data: 'notes',  
+                        "mData": null, 
+                        "bSortable": false, 
+                        "sClass": "alignCenter" 
+                    },
+                    { 
                         data: null, 
                         "bSortable": false, 
                         // "Width":"3%", 
@@ -92,7 +98,7 @@
 
 async function editemployee(id) {
     try {
-        var con = await fetch('/edithistory', {
+        var con = await fetch('/editHistoryName', {
             method: "POST",
             headers: { "Content-Type" : "application/json" },
             body: JSON.stringify({ "id" : `${id}` })
@@ -105,6 +111,7 @@ async function editemployee(id) {
         document.getElementById('aname2').value = data.assetName;
         document.getElementById('idate1').value = moment(data.issueDate).format('YYYY-MM-DD');  
         document.getElementById('rdate1').value = moment(data.returnDate).format('YYYY-MM-DD'); 
+        document.getElementById('notes').value = data.notes; 
         // document.getElementById('status1').value = data.status;
 
         const form = document.getElementById('AssetHistoryForm');
@@ -114,12 +121,13 @@ async function editemployee(id) {
             const aname = document.getElementById('aname2').value;
             const idate = document.getElementById('idate1').value;
             const rdate = document.getElementById('rdate1').value;
+            const notes = document.getElementById('notes').value;
             // const status = document.getElementById('status1').value;
 
             var con = fetch('/updateassethistory', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
-                body: JSON.stringify({ "ename" : `${ename}`, "aname" : `${aname}`, "idate" : `${idate}`, "rdate" : `${rdate}`})
+                body: JSON.stringify({"id" : `${id}`, "ename" : `${ename}`, "aname" : `${aname}`, "idate" : `${idate}`, "rdate" : `${rdate}` , "notes" : `${notes}`})
             });
             window.location.reload();
 
