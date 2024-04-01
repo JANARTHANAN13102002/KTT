@@ -19,6 +19,9 @@ const User = sequelize.define("assethistory", {
     returnDate: {
       type: DataTypes.DATE
     },
+    notes: {
+      type: DataTypes.STRING
+    },
   });
 
 module.exports = User;
