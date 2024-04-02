@@ -120,11 +120,11 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 h1, .h1 {
-  font-size: calc(1.375rem + 1.5vw);
+  font-size: calc(1.0rem + 1.5vw);
 }
 @media (min-width: 1200px) {
   h1, .h1 {
-    font-size: 2.5rem;
+    font-size: 2.1rem;
   }
 }
 
@@ -11276,3 +11276,9 @@ body {
 /* .hidden {
   display: none;
 } */
+
+
+#image{
+  height: 15px;
+  width: 15px;
+}

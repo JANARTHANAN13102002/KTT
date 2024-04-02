@@ -71,6 +71,7 @@ const pool = new Pool({
               res.status(500).send('Internal Server Error');
             }
         });
+        
 
   //Creating Asset table
       app.get('/assets', async (req, res) => {
@@ -81,7 +82,8 @@ const pool = new Pool({
             assetName : req.query.aname1,
             brandName : req.query.bname,
             model: req.query.mname,
-            assetCost : req.query.acost
+            assetCost : req.query.acost,
+            status : 0,
           });
           res.redirect(req.get('referer'));
         } catch (error) {
@@ -168,6 +170,7 @@ const pool = new Pool({
       });
 
 
+
 // Updating the DataBase Values
     // Employees table
         app.post('/employees', async (req, res) => {
@@ -208,6 +211,7 @@ const pool = new Pool({
           res.send(result);
         });
 
+        // Update the asset Table
         app.post('/updateAsset', async (req, res) => {
           try {
             const employeeId = req.body.id;
@@ -217,7 +221,7 @@ const pool = new Pool({
               assetName: req.body.aname,
               brandName : req.body.bname,
               model: req.body.mname,
-              assetCost : req.body.acost
+              assetCost : req.body.acost,
             },
             {
               where: { id: employeeId }
@@ -229,6 +233,24 @@ const pool = new Pool({
           }
         });
 
+        // Update the asset Table
+        app.post('/status/update', async (req, res) => {
+          try {
+            const employeeId = req.body.id;
+            const user = await Asset.update({
+              status : req.body.status,
+            },
+            {
+              where: { id: employeeId }
+            });
+            
+          } catch (error) {
+            console.error('Error creating user:', error);
+            res.status(500).send('Internal Server Error');
+          }
+        });
+
+        // To Select tag in asset Table
         app.get('/options', async (req, res) => {
           try {
               const { rows } = await pool.query('SELECT id, name FROM employees');
@@ -238,6 +260,8 @@ const pool = new Pool({
               res.status(500).json({ error: 'Internal Server Error' });
           }
         });
+
+        // To Select tag in asset Table
         app.get('/assetcategoryname', async (req, res) => {
           try {
               const { rows } = await pool.query('SELECT id, name FROM assetcategories');
@@ -247,6 +271,18 @@ const pool = new Pool({
               res.status(500).json({ error: 'Internal Server Error' });
           }
         });
+
+        // To the toggle Button
+        app.post('/fetching/asset', async (req, res) => {
+          try {
+            const user = await Asset.findAll();
+            res.send(user);
+          } catch (error) {
+            console.error('Error creating user:', error);
+            res.status(500).send('Internal Server Error');
+          }
+        });
+
 
 
 
@@ -273,6 +309,7 @@ const pool = new Pool({
           });
 
     // Asset History table
+        // To find the Last Element to be Updated
           app.post('/edithistory', async (req, res) => {
             const {id} = req.body;
             const results = await AssetHistory.findOne({
@@ -283,12 +320,14 @@ const pool = new Pool({
             res.send(results);
           });
 
+        // To find the row of the Asset History
           app.post('/editHistoryName', async (req, res) => {
             const {id} = req.body;
             const results = await AssetHistory.findOne({ where: { id: id }});
             res.send(results);
           });
 
+        // Updating the Asset History Table
           app.post('/updateassethistory', async (req, res) => {
             try {
               const Id = req.body.id;
@@ -308,6 +347,7 @@ const pool = new Pool({
             }
           });
 
+          // Creating new Row for the Issue Button
           app.post('/EditAssetHistory', async (req, res) => {
             try {
               const user = await AssetHistory.create({
@@ -323,6 +363,7 @@ const pool = new Pool({
             }
           });
 
+        // Update a Row for return Button
           app.post('/updateAssetreturn', async (req, res) => {
             try {
               const Id = req.body.id;
@@ -339,6 +380,7 @@ const pool = new Pool({
             }
           });
 
+          // Creating new Row for Scarp Button
           app.post('/updatescarp', async (req, res) => {
             try {
               const user = await AssetHistory.create({
@@ -347,7 +389,6 @@ const pool = new Pool({
                 issueDate : req.body.pdate,
                 returnDate : req.body.sdate,
                 notes : req.body.reason,
-              
               });
               
             } catch (error) {
@@ -355,30 +396,6 @@ const pool = new Pool({
               res.status(500).send('Internal Server Error');
             }
           });
-
-          // async function getIdFromEmployeeId(employeeId) {
-          //   try {
-          //     const query = {
-          //       text: 'SELECT id FROM AssetHistory WHERE employeeId = $1',
-          //       values: [employeeId],
-          //     };
-          
-          //     const result = await pool.query(query);
-          //     return result.rows[0].id;
-          //   } catch (error) {
-          //     console.error('Error fetching ID from employeeId:', error);
-          //     throw error;
-          //   }
-          // }
-
-
-          // app.post('/addissuename', async (req, res) => {
-          //   const {id} = req.body;
-          //   const results = await AssetHistory.findOne({where:{id : id}});
-          //   res.send(results);
-          // });
-  
-
 
 
 // Delete Asset Details
@@ -399,7 +416,3 @@ const pool = new Pool({
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-
-
-

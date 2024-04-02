@@ -21,6 +21,9 @@ const User = sequelize.define("asset", {
     },
     assetCost : {
         type: DataTypes.BIGINT
+    },
+    status : {
+        type: DataTypes.INTEGER
     }
   });
 

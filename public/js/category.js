@@ -84,32 +84,33 @@ async function fetching(url) {
     } 
 }
 
-async function editemployee(id) {
-    try {
-        var con = await fetch('/assetcategory', {
-            method: "POST",
-            headers: { "Content-Type" : "application/json" },
-            body: JSON.stringify({ "id" : `${id}` })
-        });
-
-        var data = await con.json();
-        document.getElementById('cname').value = data.name;
-
-        const form = document.getElementById('CategoryForm');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const cname = document.getElementById('cname').value;
-            
-            var con =  fetch('/updateAssetCategory', {
+// Edit Rows in Asset Category Table
+    async function editemployee(id) {
+        try {
+            var con = await fetch('/assetcategory', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
-                body: JSON.stringify({ "id" : `${id}`, "cname" : `${cname}`})
+                body: JSON.stringify({ "id" : `${id}` })
             });
 
-            window.location.reload();
-        });
+            var data = await con.json();
+            document.getElementById('cname').value = data.name;
 
-    } catch (error) {
-        console.error('Error editing employee:', error);
+            const form = document.getElementById('CategoryForm');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const cname = document.getElementById('cname').value;
+                
+                var con =  fetch('/updateAssetCategory', {
+                    method: "POST",
+                    headers: { "Content-Type" : "application/json" },
+                    body: JSON.stringify({ "id" : `${id}`, "cname" : `${cname}`})
+                });
+
+                window.location.reload();
+            });
+
+        } catch (error) {
+            console.error('Error editing employee:', error);
+        }
     }
-}
