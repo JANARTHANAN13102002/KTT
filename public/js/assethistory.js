@@ -131,15 +131,12 @@
                     body: JSON.stringify({"id" : `${id}`, "ename" : `${ename}`, "aname" : `${aname}`, "idate" : `${idate}`, "rdate" : `${rdate}` , "notes" : `${notes}`})
                 });
                 window.location.reload();
-
             });
-
         } catch (error) {
             console.error('Error editing employee:', error);
         }
     }
-
-        
+  
 
 // Delete Rows in History Table
     async function deleteemployee(id) {

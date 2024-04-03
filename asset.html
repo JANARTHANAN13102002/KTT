@@ -78,28 +78,28 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="employeeForm" method="get" action="/assets">
+                            <form id="createassetForm">
                                 <div class="mb-3">
                                     <label for="snumber" class="form-label">Serial Number</label>
-                                    <input type="number" class="form-control" name="snumber" required>
+                                    <input type="number" id="createsnumber" class="form-control" name="createsnumber" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="aname" class="form-label">Asset Name</label>
-                                    <select name="aname1" id="aname1" class="form-control" required>
+                                    <select name="createaname1" id="createaname1" class="form-control" required>
                                         <!-- Options will be populated dynamically -->
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="bname" class="form-label">Brand Name</label>
-                                    <input type="text" class="form-control" name="bname" required>
+                                    <input type="text" id="createbname" class="form-control" name="createbname" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="mname" class="form-label">Model</label>
-                                    <input type="text" class="form-control" name="mname" required>
+                                    <input type="text" id="createmname" class="form-control" name="createmname" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="acost" class="form-label">Asset Cost</label>
-                                    <input type="number" class="form-control" name="acost" required>
+                                    <input type="number" id="createacost" class="form-control" name="createacost" required>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -163,25 +163,25 @@
                     <form id="AssetForm" >
                         <div class="mb-3">
                             <label for="snumber" class="form-label">Serial Number</label>
-                            <input type="number" id="snumber" class="form-control" name="snumber" required>
+                            <input type="number" id="editsnumber" class="form-control" name="editsnumber" required>
                         </div>
                         <div class="mb-3">
                             <label for="ename" class="form-label">Asset Name</label>
-                            <select id="aname2" class="form-control" name="aname2" required>
+                            <select id="editaname2" class="form-control" name="editaname2" required>
                                 <!-- Options will be populated dynamically -->
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="bname" class="form-label">Brand Name</label>
-                            <input type="text" id="bname" class="form-control" name="bname" required>
+                            <input type="text" id="editbname" class="form-control" name="editbname" required>
                         </div>
                         <div class="mb-3">
                             <label for="mname" class="form-label">Model</label>
-                            <input type="text" id="mname" class="form-control" name="mname" required>
+                            <input type="text" id="editmname" class="form-control" name="editmname" required>
                         </div>
                         <div class="mb-3">
                             <label for="acost" class="form-label">Asset Cost</label>
-                            <input type="number" id="acost" class="form-control" name="acost" required>
+                            <input type="number" id="editacost" class="form-control" name="editacost" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -288,7 +288,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Scarp Form</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Scrap Form</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -308,7 +308,7 @@
                                 <input type="date" class="form-control" id="pdate" name="pdate" required>
                             </div>
                             <div class="mb-3">
-                                <label for="sdate" class="form-label">Scarp Date</label>
+                                <label for="sdate" class="form-label">Scrap Date</label>
                                 <input type="date" class="form-control" id="sdate" name="sdate" required>
                             </div>
                             <div class="mb-3">
@@ -331,7 +331,7 @@
         fetch('/assetcategoryname')
             .then(response => response.json())
             .then(data => {
-                const selectElement = document.getElementById('aname1');
+                const selectElement = document.getElementById('createaname1');
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
@@ -343,7 +343,7 @@
         fetch('/assetcategoryname')
             .then(response => response.json())
             .then(data => {
-                const selectElement = document.getElementById('aname2');
+                const selectElement = document.getElementById('editaname2');
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;

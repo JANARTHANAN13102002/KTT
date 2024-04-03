@@ -13,7 +13,6 @@ async function fetching(url) {
             data: data, 
             fixedColumns: false,       
             fixedHeader: false, 
-            searching: true,
             buttons: [
                 {
                     extend: 'copy',
@@ -68,44 +67,37 @@ async function fetching(url) {
                     data: 'mobile',  
                     "mData": null, 
                     "bSortable": false, 
-                     
                     "sClass": "alignCenter" 
                 }, 
                 { 
                     data: 'address',  
                     "mData": null, 
                     "bSortable": false, 
-                     
                     "sClass": "alignCenter" 
                 }, 
                 { 
                     data: 'role', "mData": null, 
                     "bSortable": false, 
-                  
-                    // "sClass": "alignCenter" 
+                    "sClass": "alignCenter" 
                 }, 
                 { 
                     data: 'bloodGroup', "mData": null, 
-                    "bSortable": false, 
-                 
-                    // "sClass": "alignCenter" 
+                    "bSortable": false,
+                    "sClass": "alignCenter" 
                 }, 
                 { 
                     data: 'salary', "mData": null, 
                     "bSortable": false, 
-                 
-                    // "sClass": "alignCenter" 
+                    "sClass": "alignCenter" 
                 }, 
                 { 
                     data: 'status', "mData": null, 
-                    // "bSortable": false, 
-                
+                    "bSortable": false, 
                     "sClass": "alignCenter" 
                 }, 
                 { 
                     data: null, 
                     "bSortable": false, 
-                    // "Width":"3%", 
                     "render": function (data) { 
                         return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>`
                     } 
@@ -135,7 +127,7 @@ async function fetching(url) {
             const address = document.getElementById('address').value;
             const role = document.getElementById('role').value;
             const bgroup = document.getElementById('bgroup').value;
-            let salary = document.getElementById('salary').value;
+            const salary = document.getElementById('salary').value;
             const status = document.getElementById('statusSelect').value;
 
             if(salary < 0) 
@@ -156,7 +148,7 @@ async function fetching(url) {
 
 
 
-// // Edit Rows in Employee Table
+// Edit Rows in Employee Table
     async function editemployee(id) {
         try {
             var con = await fetch('/employees', {
@@ -188,7 +180,7 @@ async function fetching(url) {
                 const address = document.getElementById('editaddress').value;
                 const role = document.getElementById('editrole').value;
                 const bgroup = document.getElementById('editbgroup').value;
-                let salary = document.getElementById('editsalary').value;
+                const salary = document.getElementById('editsalary').value;
                 const status = document.getElementById('editstatus').value;
                 
                 if(salary < 0) 

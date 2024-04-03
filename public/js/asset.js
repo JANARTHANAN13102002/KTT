@@ -95,7 +95,7 @@ async function fetching(url) {
                     // "Width":"3%", 
                     "render": function (data) { 
                         return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>  
-                        <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="scarpemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#scarpmodalId">Scarp</a></div>
+                        <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="scarpemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#scarpmodalId">Scrap</a></div>
                         <div class="mx-auto"><a id=assetissue` + data.id +`  class="btn btn-info btn-sm btn-size " data-id =  ${data.id}   onclick="issueemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#issuemodalId">Issue</a></div>
                         <div class="mx-auto"><a id=returnbutton` + data.id +`   class="btn btn-primary btn-sm btn-size hidden" data-id =  ${data.id}   onclick="returnemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#returnmodalId">Return</a></div>`;
                     } 
@@ -134,6 +134,32 @@ async function fetching(url) {
     }
 
 
+// Create Asset Table
+    const form = document.getElementById('createassetForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const snumber = document.getElementById('createsnumber').value;
+        const aname1 = document.getElementById('createaname1').value;
+        const bname = document.getElementById('createbname').value;
+        const mname = document.getElementById('createmname').value;
+        const acost = document.getElementById('createacost').value;
+
+        if(acost < 0) 
+        {
+            window.alert("Asset Cost is in Negative Value. Please try again");
+        } else {
+            var con =  fetch('/assets', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({"snumber" : `${snumber}`,"aname1" : `${aname1}`,"bname" : `${bname}`,"mname" : `${mname}`,"acost" : `${acost}`, })
+            });
+        }
+
+        window.location.reload();
+    });
+
+
 // Edit Rows in Asset Table
     async function editemployee(id) {
         try {
@@ -145,28 +171,32 @@ async function fetching(url) {
 
             var data = await con.json();
             var num = data.serialNumber;
-            document.getElementById("snumber").value = num;
-            document.getElementById('aname2').value = data.assetName;
-            document.getElementById('bname').value = data.brandName;
-            document.getElementById('mname').value = data.model;
-            document.getElementById('acost').value = data.assetCost;
+            document.getElementById("editsnumber").value = num;
+            document.getElementById('editaname2').value = data.assetName;
+            document.getElementById('editbname').value = data.brandName;
+            document.getElementById('editmname').value = data.model;
+            document.getElementById('editacost').value = data.assetCost;
     
             const form = document.getElementById('AssetForm');
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
-                const snumber = document.getElementById('snumber').value;
-                const aname = document.getElementById('aname2').value;
-                const bname = document.getElementById('bname').value;
-                const mname = document.getElementById('mname').value;
-                const acost = document.getElementById('acost').value;
+                const snumber = document.getElementById('editsnumber').value;
+                const aname = document.getElementById('editaname2').value;
+                const bname = document.getElementById('editbname').value;
+                const mname = document.getElementById('editmname').value;
+                const acost = document.getElementById('editacost').value;
                 
-                var con =  fetch('/updateAsset', {
-                    method: "POST",
-                    headers: { "Content-Type" : "application/json" },
-                    body: JSON.stringify({ "id" : `${id}`, "snumber" : `${snumber}`, "aname" : `${aname}`, "bname" : `${bname}`, "mname" : `${mname}`
-                    , "acost" : `${acost}`})
-                });
-
+                if(acost < 0) 
+                {
+                    window.alert("Asset Cost is in Negative Value. Please try again");
+                } else {
+                    var con =  fetch('/updateAsset', {
+                        method: "POST",
+                        headers: { "Content-Type" : "application/json" },
+                        body: JSON.stringify({ "id" : `${id}`, "snumber" : `${snumber}`, "aname" : `${aname}`, "bname" : `${bname}`, "mname" : `${mname}`
+                        , "acost" : `${acost}`})
+                    });
+                }
                 window.location.reload();
             });
         } catch (error) {

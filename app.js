@@ -19,9 +19,37 @@ const pool = new Pool({
 });
 
 
+// Chart For the Employee Table
+  app.get('/chart/employee', async (req, res) => {
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT status, COUNT(*) AS count FROM employees GROUP BY status');
+      client.release();
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error executing query', error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  });
+
+// // Chart For the Asset Table
+//     app.get('/chart/asset', async (req, res) => {
+//       try {
+//         const client = await pool.connect();
+//         const result = await client.query('SELECT assetName, COUNT(*) AS count FROM assets GROUP BY assetName');
+//         client.release();
+//         res.json(result.rows);
+//       } catch (error) {
+//         console.error('Error executing query', error);
+//         res.status(500).json({ error: 'An error occurred' });
+//       }
+//     });
+
+
+
 // Creating the Router(API)
   app.get('/', (req, res) => {
-      res.sendFile(path.join(__dirname,'index.html'));
+      res.sendFile(path.join(__dirname,'dashboard.html'));
   });
   app.get('/addemp', (req, res) => {
       res.sendFile(path.join(__dirname,'addemp.html'));
@@ -36,7 +64,7 @@ const pool = new Pool({
       res.sendFile(path.join(__dirname,'assethistory.html'));
   });
   app.get('/login', (req, res) => {
-      res.sendFile(path.join(__dirname,'login.html'));
+      res.sendFile(path.join(__dirname,'index.html'));
   });
   app.get('/register', (req, res) => {
       res.sendFile(path.join(__dirname,'register.html'));
@@ -74,18 +102,18 @@ const pool = new Pool({
         
 
   //Creating Asset table
-      app.get('/assets', async (req, res) => {
+      app.post('/assets', async (req, res) => {
         try {
           const user = await Asset.create({
-            serialNumber : req.query.snumber,
-            employeeName : req.query.ename,
-            assetName : req.query.aname1,
-            brandName : req.query.bname,
-            model: req.query.mname,
-            assetCost : req.query.acost,
+            serialNumber : req.body.snumber,
+            employeeName : req.body.ename,
+            assetName : req.body.aname1,
+            brandName : req.body.bname,
+            model: req.body.mname,
+            assetCost : req.body.acost,
             status : 0,
           });
-          res.redirect(req.get('referer'));
+          res.send(user);
         } catch (error) {
           console.error('Error creating user:', error);
           res.status(500).send('Internal Server Error');
@@ -106,23 +134,6 @@ const pool = new Pool({
         }
       });
 
-  //Creating Asset History table
-      app.post('/assethistorycreate', async (req, res) => {
-        try {
-          const user = await AssetHistory.create({
-            employeeName : req.body.ename,
-            assetName : req.body.aname,
-            issueDate : req.body.idate,
-            returnDate : req.body.rdate,
-            status : req.body.status,
-          });
-          console.log(user);
-          res.send("result");
-        } catch (error) {
-          console.error('Error creating user:', error);
-          res.status(500).send('Internal Server Error');
-        }
-      });
 
 // Displaying the Table
     // Displaying the Employees Table
@@ -190,7 +201,7 @@ const pool = new Pool({
               address : req.body.address,
               role :  req.body.role,
               bloodGroup : req.body.bgroup,
-              salary : req.query.salary,
+              salary : req.body.salary,
               status : req.body.status,
             },
             {
@@ -283,9 +294,6 @@ const pool = new Pool({
           }
         });
 
-
-
-
     // Asset Category table
           app.post('/assetcategory', async (req, res) => {
             const {id} = req.body;
@@ -320,7 +328,7 @@ const pool = new Pool({
             res.send(results);
           });
 
-        // To find the row of the Asset History
+        // To find the row Values of the Asset History
           app.post('/editHistoryName', async (req, res) => {
             const {id} = req.body;
             const results = await AssetHistory.findOne({ where: { id: id }});
