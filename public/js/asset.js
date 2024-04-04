@@ -95,7 +95,7 @@ async function fetching(url) {
                     // "Width":"3%", 
                     "render": function (data) { 
                         return `<div class="mx-auto"><a class="btn btn-warning btn-sm btn-size" data-id =  ${data.id}   onclick="editemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#editmodalId">Edit</a></div>  
-                        <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size " data-id =  ${data.id}   onclick="scarpemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#scarpmodalId">Scrap</a></div>
+                        <div class="mx-auto"><a class="btn btn-danger btn-sm btn-size"  data-id =  ${data.id}   onclick="scarpemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#scarpmodalId">Scrap</a></div>
                         <div class="mx-auto"><a id=assetissue` + data.id +`  class="btn btn-info btn-sm btn-size " data-id =  ${data.id}   onclick="issueemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#issuemodalId">Issue</a></div>
                         <div class="mx-auto"><a id=returnbutton` + data.id +`   class="btn btn-primary btn-sm btn-size hidden" data-id =  ${data.id}   onclick="returnemployee(this.getAttribute('data-id'))" data-bs-toggle="modal" data-bs-target="#returnmodalId">Return</a></div>`;
                     } 

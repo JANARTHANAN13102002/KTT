@@ -10,7 +10,9 @@
         const data = await fetchData();
         const labels = data.labels;
         const counts = data.counts.map(count => parseInt(count)); 
-      
+        
+        console.log(labels+" "+counts);
+
         const backgroundColors = [];
         for (let i = 0; i < labels.length; i++) {
           const r = Math.floor(Math.random() * 256);
@@ -29,7 +31,7 @@
               label: 'Employee Status', 
               data: counts,
               backgroundColor: backgroundColors,
-              borderWidth: 1
+              borderWidth: 5
             }]
           },
           options: {
@@ -63,6 +65,8 @@
         const labels = data.labels;
         const counts = data.counts;
 
+        console.log(labels+" "+counts);
+
         const backgroundColors = [];
         for (let i = 0; i < labels.length; i++) {
           const r = Math.floor(Math.random() * 256);
@@ -85,13 +89,13 @@
             }]
           },
           options: {
-            responsive: false
+            responsive: true
           },
           scales: {
             yAxes: [{
               ticks: {
-                suggestedMin: 0, 
-                suggestedMax: 10, 
+                suggestedMin: 1, 
+                suggestedMax: 5, 
                 stepSize: 1, 
               }
             }]
@@ -101,5 +105,4 @@
         console.error('Error creating asset chart:', error);
       }
     }
-
     createasset();
