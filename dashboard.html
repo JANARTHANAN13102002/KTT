@@ -72,16 +72,43 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 id="emp">Employee Tables</h1>
-                        <canvas id="myChart" width="400" height="400"></canvas>
-                        <h4 id="active"></h4>
-                        <h4 id="inactive"></h4>
-                        <h4 id="total"></h4>
+                        <div class="rowChart">
+                            <div class="col-lg-chart">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-pie me-1"></i>
+                                        Employee Table
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="EmployeeChart" height="200"></canvas>
+                                        <h6 id="active"></h6>
+                                        <h6 id="inactive"></h6>
+                                        <h6 id="total"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-chart">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar me-1"></i>
+                                        Asset Category Table
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="assetchart" height="205"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-chart">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-pie me-1"></i>
+                                        Pie Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myPieChart"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- <div class="container-fluid px-4">
-                        <h1 id="emp">Asset Tables</h1>
-                        <canvas id="assetchart" width="400" height="400"></canvas>
-                    </div> -->
                 </main>
             </div>
         </div>

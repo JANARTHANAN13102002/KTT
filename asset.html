@@ -335,7 +335,7 @@
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
-                    optionElement.textContent = `${option.name}`;
+                    optionElement.textContent = `${option.id} - ${option.name}`;
                     selectElement.appendChild(optionElement);
             });
         });
@@ -347,7 +347,7 @@
                 data.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.value = option.name;
-                    optionElement.textContent = `${option.name}`;
+                    optionElement.textContent = `${option.id} - ${option.name}`;
                     selectElement.appendChild(optionElement);
             });
         });

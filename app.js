@@ -20,30 +20,38 @@ const pool = new Pool({
 
 
 // Chart For the Employee Table
-  app.get('/chart/employee', async (req, res) => {
-    try {
-      const client = await pool.connect();
-      const result = await client.query('SELECT status, COUNT(*) AS count FROM employees GROUP BY status');
-      client.release();
-      res.json(result.rows);
-    } catch (error) {
-      console.error('Error executing query', error);
-      res.status(500).json({ error: 'An error occurred' });
-    }
-  });
+app.get('/chart/employee', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT status, COUNT(*) AS count FROM employees GROUP BY status');
+    client.release();
+    
+    const statuses = result.rows.map(row => row.status); // Change from row.name to row.status
+    const counts = result.rows.map(row => parseInt(row.count)); 
+    
+    res.json({ labels: statuses, counts: counts }); // Sending labels as statuses
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
 
-// // Chart For the Asset Table
-//     app.get('/chart/asset', async (req, res) => {
-//       try {
-//         const client = await pool.connect();
-//         const result = await client.query('SELECT assetName, COUNT(*) AS count FROM assets GROUP BY assetName');
-//         client.release();
-//         res.json(result.rows);
-//       } catch (error) {
-//         console.error('Error executing query', error);
-//         res.status(500).json({ error: 'An error occurred' });
-//       }
-//     });
+
+// Chart For the Asset Table
+app.get('/chart/asset', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT "assetName", COUNT(*) AS count FROM assets GROUP BY "assetName"');
+    client.release();
+    const assetNames = result.rows.map(row => row.assetName); 
+    const counts = result.rows.map(row => parseInt(row.count)); 
+    res.json({ labels: assetNames, counts: counts }); 
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
 
 
 
@@ -229,7 +237,7 @@ const pool = new Pool({
             const user = await Asset.update({
               serialNumber: req.body.snumber,
               employeeName: req.body.ename,
-              assetName: req.body.aname,
+              assetName : req.body.aname,
               brandName : req.body.bname,
               model: req.body.mname,
               assetCost : req.body.acost,
