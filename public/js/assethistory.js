@@ -72,6 +72,13 @@
                         "sClass": "alignCenter" 
                     },
                     { 
+                        data: 'ScrapDate',  
+                        "mData": null, 
+                        "bSortable": false, 
+                        "render" : (data) => moment(data).format('LL'),
+                        "sClass": "alignCenter" 
+                    },
+                    { 
                         data: 'notes',  
                         "mData": null, 
                         "bSortable": false, 

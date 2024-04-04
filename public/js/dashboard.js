@@ -36,6 +36,11 @@
           },
           options: {
             responsive: false
+          },
+          plugins: {
+            title: {
+              display: false // Disable chart title
+            }
           }
         });
       } catch (error) {
@@ -65,7 +70,7 @@
         const labels = data.labels;
         const counts = data.counts;
 
-        console.log(labels+" "+counts);
+        console.log(labels);
 
         const backgroundColors = [];
         for (let i = 0; i < labels.length; i++) {
@@ -82,23 +87,22 @@
           data: {
             labels: labels,
             datasets: [{
-              label: 'Count',
               data: counts,
               backgroundColor: backgroundColors,
-              borderWidth: 1
             }]
           },
           options: {
-            responsive: true
+            responsive: false,
           },
           scales: {
-            yAxes: [{
+            y: {
               ticks: {
-                suggestedMin: 1, 
-                suggestedMax: 5, 
-                stepSize: 1, 
+                autoSkip: false,
+                suggestedMin: 1,
+                suggestedMax: 5,
+                stepSize: 1
               }
-            }]
+            }
           },
         });
       } catch (error) {

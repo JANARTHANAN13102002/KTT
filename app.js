@@ -403,7 +403,7 @@ app.get('/chart/asset', async (req, res) => {
                 employeeName : req.body.scarpname,
                 assetName : req.body.scarpassetname,
                 issueDate : req.body.pdate,
-                returnDate : req.body.sdate,
+                scrapDate : req.body.sdate,
                 notes : req.body.reason,
               });
               
