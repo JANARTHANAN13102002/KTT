@@ -1,32 +1,26 @@
-const { DataTypes, NUMBER } = require('sequelize');
-const sequelize = require('../config/db');
+var  Sequelize  = require("sequelize");
 
-const User = sequelize.define("asset", {
+module.exports = function(sequelize, DataTypes) {
+  const Asset = sequelize.define("Asset", {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.BIGINT,
       autoIncrement: true,
       primaryKey: true
     },
-    serialNumber: {
-      type: DataTypes.INTEGER,
+    serialNumber: Sequelize.INTEGER,
+    assetName: Sequelize.STRING,
+    brandName: Sequelize.STRING,
+    model: Sequelize.STRING,
+    assetCost: Sequelize.NUMERIC(10,2),
+    status: Sequelize.INTEGER // 0 - Issue and Scrap Button, 1 - Return Button
     },
-    assetName  : {
-        type : DataTypes.STRING
-    },
-    brandName : {
-      type: DataTypes.STRING
-    },
-    model : {
-      type: DataTypes.STRING
-    },
-    assetCost : {
-        type: DataTypes.BIGINT
-    },
-    status : {
-        type: DataTypes.INTEGER
-    }
-  });
-
-
-
-module.exports = User;
+    {
+      classMethods: {
+          associate: function(models) {
+            Asset.belongsTo(models.AssetCategory);
+            Asset.hasMany(models.AssetHistory);
+          }
+        }
+    });
+  return Asset;
+};

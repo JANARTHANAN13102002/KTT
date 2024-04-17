@@ -1,16 +1,16 @@
-fetching('/employee')
+fetching('/employee/displayemployee')
 async function fetching(url) { 
     try { 
         var res = await fetch(url); 
         var data = await res.json(); 
-        console.log(data); 
-        if(data.message){ 
-            alert(data.message); 
+        
+        if(data.result.message){ 
+            alert(data.result.message); 
             sessionStorage.removeItem('token'); 
             window.location="/" 
         } 
         table = new DataTable('#employee_master', {          
-            data: data, 
+            data: data.result, 
             fixedColumns: false,       
             fixedHeader: false, 
             buttons: [
@@ -117,7 +117,7 @@ async function fetching(url) {
 
 // Creating New Row in Employee Table 
         const form = document.getElementById('employeeForm');
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit',async function(event) {
             event.preventDefault();
             
             const name = document.getElementById('name').value;
@@ -128,22 +128,26 @@ async function fetching(url) {
             const role = document.getElementById('role').value;
             const bgroup = document.getElementById('bgroup').value;
             const salary = document.getElementById('salary').value;
-            const status = document.getElementById('statusSelect').value;
+            const status = document.getElementById('status').value;
 
-            if(salary < 0) 
-            {
-                window.alert("Salary is in Negative Value. Please try again");
-            } else {
-                var con =  fetch('/submit', {
-                    method: "POST",
-                    headers: { "Content-Type" : "application/json" },
-                    body: JSON.stringify({ "name" : `${name}`, "email" : `${email}`, "age" : `${age}`, "mnumber" : `${mnumber}`,
-                    "address" : `${address}`, "role" : `${role}`, "bgroup" : `${bgroup}`, "salary" : `${salary}`, "status" : `${status}`})
-                });
-            }
+            
+            var con = await fetch('/employee/submit', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({ "name" : `${name}`, "email" : `${email}`, "age" : `${age}`, "mnumber" : `${mnumber}`,
+                "address" : `${address}`, "role" : `${role}`, "bgroup" : `${bgroup}`, "salary" : `${salary}`, "status" : `${status}`})
+            });
 
-            window.location.reload();
+            var data = await con.json();
+            if(data.success == false)
+                window.alert(data.error);
+            else   
+                window.alert("Employee Details is Created")
+
+        window.location.reload();
         });
+
+// Creating Connection
 
 
 
@@ -151,27 +155,32 @@ async function fetching(url) {
 // Edit Rows in Employee Table
     async function editemployee(id) {
         try {
-            var con = await fetch('/employees', {
+            var con = await fetch('/employee/employees', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
                 body: JSON.stringify({ "id" : `${id}` })
             });
 
+            if(con.success == false){
+                alert(con.error || "Not able to Fetch");
+            }
+
             var data = await con.json();
-            var name = data.name;
+
+            var name = data.result.name;
             document.getElementById('editname').value = name;
-            document.getElementById('editemail').value = data.email;
-            document.getElementById('editage').value = data.age;
-            document.getElementById('editmobile').value = data.mobile;
-            document.getElementById('editaddress').value =data.address;
-            document.getElementById('editrole').value = data.role;
-            document.getElementById('editbgroup').value = data.bloodGroup;
-            document.getElementById('editsalary').value = data.salary;
-            document.getElementById('editstatus').value = data.status;
+            document.getElementById('editemail').value = data.result.email;
+            document.getElementById('editage').value = data.result.age;
+            document.getElementById('editmobile').value = data.result.mobile;
+            document.getElementById('editaddress').value =data.result.address;
+            document.getElementById('editrole').value = data.result.role;
+            document.getElementById('editbgroup').value = data.result.bloodGroup;
+            document.getElementById('editsalary').value = data.result.salary;
+            document.getElementById('editstatus').value = data.result.status;
             
 
             const form = document.getElementById('UpdateEmployee');
-            form.addEventListener('submit', function(event) {
+            form.addEventListener('submit',async function(event) {
                 event.preventDefault();
                 const name = document.getElementById('editname').value;
                 const email = document.getElementById('editemail').value;
@@ -183,19 +192,20 @@ async function fetching(url) {
                 const salary = document.getElementById('editsalary').value;
                 const status = document.getElementById('editstatus').value;
                 
-                if(salary < 0) 
-                {
-                    window.alert("Salary is in Negative Value. Please try again");
-                } else {
-                    var con =  fetch('/updateEmployee', {
-                        method: "POST",
-                        headers: { "Content-Type" : "application/json" },
-                        body: JSON.stringify({ "id" : `${id}`, "name" : `${name}`, "email" : `${email}`, "age" : `${age}`, "mobile" : `${mobile}`
-                        , "address" : `${address}`, "role" : `${role}`, "bgroup" : `${bgroup}`, "salary" : `${salary}`, "status" : `${status}` })
-                    });
-                }
+                var con = await fetch('/employee/updateEmployee', {
+                    method: "PUT",
+                    headers: { "Content-Type" : "application/json" },
+                    body: JSON.stringify({ "id" : `${id}`, "name" : `${name}`, "email" : `${email}`, "age" : `${age}`, "mobile" : `${mobile}`
+                    , "address" : `${address}`, "role" : `${role}`, "bgroup" : `${bgroup}`, "salary" : `${salary}`, "status" : `${status}` })
+                });
 
-                window.location.reload();
+                var data = await con.json();
+                if(data.success == false)
+                    window.alert(data.error);
+                else   
+                    window.alert("Employee Details is Edited")
+
+            window.location.reload();
             });
         } catch (error) {
             console.error('Error editing employee:', error);

@@ -1,28 +1,46 @@
-const Employee = require('./employee.js');
-const Asset = require('./asset.js');
-const Category = require('./category.js');
-const AssetHistory = require('./assethistory.js');
-const fs = require('fs');
-const path = require('path');
-const { Sequelize } = require('sequelize');
+const fs = require("fs");
+const path = require("path");
+const { Sequelize } = require("sequelize");
 const basename = path.basename(module.filename);
-const sequelize = require('../config/db.js');
+const config = require("./../config/db.json");
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const db = {};
 
-Employee.hasMany(Asset);
-Category.hasMany(Asset);
 
-Asset.hasMany(AssetHistory);
-Employee.hasMany(AssetHistory);
-
-sequelize.sync()
-    .then(() => {
-        console.log("Database Synchronization Successful");
-        Object.keys(sequelize.models).forEach(modelName => {
-            console.log(`Table Created: ${modelName}`);
-        });
+// Read model files and associate them with Sequelize
+  fs.readdirSync(__dirname)
+    .filter(function(file) {
+      return (file.indexOf(".") !== 0) && (file !== basename);
     })
-    .catch(error => {
-        console.log('Error in Synchronizing database:', error);
+    .forEach(file => {
+      const model = sequelize['import'](path.join(__dirname, file))
+      db[model.name] = model;
     });
 
-module.exports = {Employee, Asset, Category,AssetHistory};
+
+// Apply associations
+  Object.keys(db).forEach(function(modelName) {
+    if ("associate" in db[modelName]) {
+      db[modelName].associate(db);
+    }
+  });
+
+// Test the database connection
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+    });
+
+
+  db.sequelize = sequelize;
+  db.Sequelize = Sequelize;
+
+// If we run the Code, the Table will be created with Foreign Keys
+  sequelize.sync();
+
+// Export db object
+  module.exports = db;

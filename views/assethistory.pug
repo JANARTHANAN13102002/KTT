@@ -1,0 +1,152 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Asset Management
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/styles.css')
+    script(src='https://use.fontawesome.com/releases/v6.3.0/js/all.js', crossorigin='anonymous')
+  body.sb-nav-fixed
+    nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
+      // Navbar Brand
+      a.navbar-brand.ps-3(href='/') Asset Management
+      // Sidebar Toggle
+      button#sidebarToggle.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(href='#!')
+        i.fas.fa-bars
+      // Navbar Search
+      form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0
+        .input-group
+          input.form-control(type='text', placeholder='Search for...', aria-label='Search for...', aria-describedby='btnNavbarSearch')
+          button#btnNavbarSearch.btn.btn-primary(type='button')
+            i.fas.fa-search
+      // Navbar
+      ul.navbar-nav.ms-auto.ms-md-0.me-3.me-lg-4
+        li.nav-item.dropdown
+          a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false')
+            i.fas.fa-user.fa-fw
+          ul.dropdown-menu.dropdown-menu-end(aria-labelledby='navbarDropdown')
+            li
+              a.dropdown-item(href='#!') Settings
+            li
+              a.dropdown-item(href='#!') Activity Log
+            li
+              hr.dropdown-divider
+            li
+              a.dropdown-item(href='#!') Logout
+    #layoutSidenav
+      #layoutSidenav_nav
+        nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-dark
+          .sb-sidenav-menu
+            .nav
+              a.nav-link(href='/dashboard')
+                .sb-nav-link-icon
+                  i.fas.fa-tachometer-alt
+                  |  Dashboard
+              a.nav-link(href='/category')
+                .sb-nav-link-icon
+                  i.fas.fa-server
+                  |  Asset Categories
+              a.nav-link(href='/employee')
+                .sb-nav-link-icon
+                  i.fas.fa-users
+                  |  Employee Details
+              a.nav-link(href='/asset')
+                .sb-nav-link-icon
+                  i.fas.fa-wallet
+                  |  Asset Master
+              a.nav-link(href='/assethistory')
+                .sb-nav-link-icon
+                  i.fas.fa-save
+                  |  Asset Histories
+    // Table Creation
+    #layoutSidenav
+      #layoutSidenav_content
+        main
+          .container-fluid.px-4
+            h1.mt-4 Asset History Table
+            .card.mb-4
+              .card-body
+                .card-body
+                  table#asset_history.table.table-bordered
+                    thead
+                      tr
+                        th Id
+                        th Asset Name
+                        th Issue Date
+                        th Return Date
+                        th Scrap Date
+                        th Reason
+                        th Action
+    #editmodalId.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Edit History Form
+            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+          .modal-body
+            form#AssetHistoryForm
+              .mb-3
+                label.form-label(for='ename') Asset Name
+                input#editAname.form-control(type = 'text', name='editAname', required='')
+              .mb-3
+                label.form-label(for='idate') Issue Date
+                input#idate1.form-control(type='date', name='idate', required='')
+              .mb-3
+                label.form-label(for='rdate') Return Date
+                input#rdate1.form-control(type='date', name='rdate')
+              .mb-3
+                label.form-label(for='rdate') Scrap Date
+                input#scrapdate.form-control(type='date', name='scrapdate')
+              .mb-3
+                label.form-label(for='notes') Reason
+                input#notes.form-control(type='text', name='notes', required='')
+              .modal-footer
+                button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Close
+                button.btn.btn-primary(type='submit') Submit
+    #scarpmodalId.modal.fade(tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Scarp Form
+            button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Close')
+          .modal-body
+            form#AssetScarpForm
+              .mb-3
+                label.form-label(for='scarpassetname') Asset Name
+                select#scarpassetname.form-control(name='scarpassetname', required='')
+                  // Options will be populated dynamically
+              .mb-3
+                label.form-label(for='sdate') Scarp Date
+                input#sdate.form-control(type='date', name='sdate', required='')
+              .mb-3
+                label.form-label(for='reason') Reason
+                input#reason.form-control(type='text', name='reason', required='')
+              .modal-footer
+                button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Close
+                button.btn.btn-primary(type='submit') Submit
+    
+    
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', crossorigin='anonymous')
+    script(src='/js/scripts.js')
+    script(src='/js/assethistory.js')
+    script(src='/app.js')
+    script(src='/js/moment.js')
+    script(src='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js', crossorigin='anonymous')
+    link(href='https://cdn.datatables.net/v/bs5/dt-2.0.1/datatables.min.css', rel='stylesheet')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js')
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    script(src='https://code.jquery.com/jquery-3.7.1.js')
+    script(src='https://cdn.datatables.net/2.0.2/js/dataTables.js')
+    script(src='https://cdn.datatables.net/v/bs5/dt-2.0.1/datatables.min.js')
+    script(src='https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js')
+    script(src='https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js')
+    script(src='https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js')
+    script(src='https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js')
+    script(src='/bootstrap-5.0.2-dist/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js')

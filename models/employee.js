@@ -1,39 +1,31 @@
-const { DataTypes, NUMBER  } = require('sequelize');
-const sequelize = require('../config/db');
+// Short Int -- 32 bit
+// Big int -- 64 bit
+var Sequelize = require("sequelize");
 
-const User = sequelize.define("employee", {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+module.exports = function(sequelize, DataTypes)  {
+    const Employee = sequelize.define("Employee", {
+        id: {
+        type: Sequelize.BIGINT,
+        primaryKey: true,
+        autoIncrement: true,
+        },
+        name: Sequelize.STRING ,
+        email : Sequelize.STRING ,
+        age:  Sequelize.INTEGER,
+        mobile: Sequelize.STRING,
+        address: Sequelize.TEXT,
+        role: Sequelize.STRING ,
+        bloodGroup : Sequelize.STRING,
+        salary  : Sequelize.NUMERIC(15,2),
+        status   : Sequelize.INTEGER // 1 - Active , 0 - Inactive 
     },
-    name: {
-      type: DataTypes.STRING
-    },
-    email : {
-        type : DataTypes.STRING
-    },
-    age: {
-      type: DataTypes.INTEGER
-    },
-    mobile: {
-      type: DataTypes.BIGINT
-    },
-    address: {
-        type: DataTypes.TEXT
-    },
-    role: {
-        type: DataTypes.TEXT
-    },
-    bloodGroup : {
-        type: DataTypes.STRING
-    },
-    salary  : {
-        type: DataTypes.INTEGER
-    },
-    status   : {
-        type: DataTypes.TEXT
-    },
-  });
+    {
+        classMethods: {
+            associate: function(models) {
+                Employee.hasMany(models.AssetHistory)
+            }
+        }
+    });
 
-module.exports = User;
+    return Employee;
+}

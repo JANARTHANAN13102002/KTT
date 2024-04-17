@@ -1,0 +1,101 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Asset Management
+    link(href='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css', rel='stylesheet')
+    // <link href="/public/css/styles.css" rel="stylesheet" />
+    link(href='/css/styles.css', rel='stylesheet')
+    script(src='https://use.fontawesome.com/releases/v6.3.0/js/all.js', crossorigin='anonymous')
+  body.sb-nav-fixed
+    nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
+      // Navbar Brand
+      a.navbar-brand.ps-3(href='/') Asset Management
+      // Sidebar Toggle
+      button#sidebarToggle.btn.btn-link.btn-sm.order-1.order-lg-0.me-4.me-lg-0(href='#!')
+        i.fas.fa-bars
+      // Navbar Search
+      form.d-none.d-md-inline-block.form-inline.ms-auto.me-0.me-md-3.my-2.my-md-0
+        .input-group
+          input.form-control(type='text', placeholder='Search for...', aria-label='Search for...', aria-describedby='btnNavbarSearch')
+          button#btnNavbarSearch.btn.btn-primary(type='button')
+            i.fas.fa-search
+      // Navbar
+      ul.navbar-nav.ms-auto.ms-md-0.me-3.me-lg-4
+        li.nav-item.dropdown
+          a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown', aria-expanded='false')
+            i.fas.fa-user.fa-fw
+          ul.dropdown-menu.dropdown-menu-end(aria-labelledby='navbarDropdown')
+            li
+              a.dropdown-item(href='#!') Settings
+            li
+              a.dropdown-item(href='#!') Activity Log
+            li
+              hr.dropdown-divider
+            li
+              a.dropdown-item(href='/register/update') Logout
+    #layoutSidenav
+      #layoutSidenav_nav
+        nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-dark
+          .sb-sidenav-menu
+            .nav
+              a.nav-link(href='/dashboard')
+                .sb-nav-link-icon
+                  i.fas.fa-tachometer-alt
+                  |  Dashboard
+              a.nav-link(href='/category')
+                .sb-nav-link-icon
+                  i.fas.fa-server
+                  |  Asset Categories
+              a.nav-link(href='/employee')
+                .sb-nav-link-icon
+                  i.fas.fa-users
+                  |  Employee Details
+              a.nav-link(href='/asset')
+                .sb-nav-link-icon
+                  i.fas.fa-wallet
+                  |  Asset Master
+              a.nav-link(href='/assethistory')
+                .sb-nav-link-icon
+                  i.fas.fa-save
+                  |  Asset Histories
+    #layoutSidenav_content
+      main
+        .container-fluid.px-4
+          .rowChart
+            .col-lg-chart
+              .card.mb-4
+                .card-header
+                  i.fas.fa-chart-pie.me-1
+                  |  Employee
+                .card-body
+                  canvas#EmployeeChart
+                  h6#active 1 - Active
+                  h6#inactive 0 - Inactive
+                  h6#total 
+            .col-lg-chart
+              .card.mb-4
+                .card-header
+                  i.fas.fa-chart-bar.me-1
+                  |  Asset
+                .card-body
+                  #assetchart
+                  h6#total 
+            .col-lg-chart
+              .card.mb-4
+                .card-header
+                  i.fas.fa-chart-line.me-1
+                  | Pie
+                .card-body
+                  canvas#assethistory(height = '300')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', crossorigin='anonymous')
+    script(src='/js/scripts.js')
+    script(src='/js/dashboard.js')
+    script(src='/js/moment.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js', crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js', crossorigin='anonymous')
+    script(src='https://cdn.plot.ly/plotly-latest.min.js')

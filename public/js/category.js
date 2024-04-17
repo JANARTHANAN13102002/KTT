@@ -1,16 +1,16 @@
-fetching('/categoryfetch');
+fetching('/category/categoryfetch');
 async function fetching(url) { 
     try { 
         var res = await fetch(url); 
         var data = await res.json(); 
-        console.log(data); 
-        if(data.message){ 
-            alert(data.message); 
+       
+        if(data.result.message){ 
+            alert(data.result.message); 
             sessionStorage.removeItem('token'); 
             window.location="/" 
         } 
         table = new DataTable('#category_master', {          
-            data: data, 
+            data: data.result, 
             fixedColumns: false,       
             fixedHeader: false, 
             buttons: [
@@ -84,28 +84,66 @@ async function fetching(url) {
     } 
 }
 
+
+
+
+// Creating New Row in Employee Table 
+    const form = document.getElementById('createCategory');
+        form.addEventListener('submit',async function(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('createCategoryName').value;
+    
+        var con = await fetch('/category/createcategory', {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({ "name" : `${name}`})
+        });
+
+        var data = await con.json();
+        if(data.success == true)
+            window.alert("Asset Category is Created successfully");
+        else    
+            window.alert(data.error);
+
+        window.location.reload();
+    });
+
+
+
 // Edit Rows in Asset Category Table
     async function editemployee(id) {
         try {
-            var con = await fetch('/assetcategory', {
+            var con = await fetch('/category/assetcategory', {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
                 body: JSON.stringify({ "id" : `${id}` })
             });
 
+            if(con.success == false)
+                alert(con.success || "Couldn't able to Fetch Data")
+
             var data = await con.json();
-            document.getElementById('cname').value = data.name;
+            console.log(data.result.name);
+
+            document.getElementById('cname').value = data.result.name;
 
             const form = document.getElementById('CategoryForm');
-            form.addEventListener('submit', function(event) {
+            form.addEventListener('submit',async function(event) {
                 event.preventDefault();
                 const cname = document.getElementById('cname').value;
                 
-                var con =  fetch('/updateAssetCategory', {
-                    method: "POST",
+                var con = await fetch('/category/updateAssetCategory', {
+                    method: "PUT",
                     headers: { "Content-Type" : "application/json" },
                     body: JSON.stringify({ "id" : `${id}`, "cname" : `${cname}`})
                 });
+
+                var data = await con.json();
+                if(data.success == true)
+                    window.alert("Asset Category Edited successfully");
+                else    
+                    window.alert(data.error);
 
                 window.location.reload();
             });

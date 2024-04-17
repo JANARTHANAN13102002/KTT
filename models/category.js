@@ -1,16 +1,19 @@
-const { DataTypes, NUMBER } = require('sequelize');
-const sequelize = require('../config/db');
+var Sequelize = require("sequelize");
 
-const User = sequelize.define("assetcategory", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    name : {
-      type: DataTypes.STRING
-    },
-  });
-
-
-module.exports = User;
+module.exports = function(sequelize, DataTypes)  {
+    const AssetCategory = sequelize.define("AssetCategory", {
+        id: {
+        type: Sequelize.BIGINT,
+        autoIncrement: true,
+        primaryKey: true
+        },
+        name : Sequelize.STRING
+    },{
+        classMethods: {
+            associate: function(models) {
+                AssetCategory.hasMany(models.Asset)
+            }
+        }
+    });
+    return AssetCategory;
+}
